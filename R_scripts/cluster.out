@@ -1,0 +1,67 @@
+starting worker pid=19065 on localhost:11276 at 07:43:03.968
+starting worker pid=19066 on localhost:11276 at 07:43:04.022
+starting worker pid=19067 on localhost:11276 at 07:43:04.078
+starting worker pid=19068 on localhost:11276 at 07:43:04.134
+starting worker pid=19069 on localhost:11276 at 07:43:04.190
+starting worker pid=19071 on localhost:11276 at 07:43:04.245
+starting worker pid=19072 on localhost:11276 at 07:43:04.299
+starting worker pid=19073 on localhost:11276 at 07:43:04.353
+starting worker pid=19074 on localhost:11276 at 07:43:04.406
+starting worker pid=19075 on localhost:11276 at 07:43:04.457
+starting worker pid=19076 on localhost:11276 at 07:43:04.534
+starting worker pid=19078 on localhost:11276 at 07:43:04.603
+starting worker pid=19079 on localhost:11276 at 07:43:04.663
+starting worker pid=19080 on localhost:11276 at 07:43:04.723
+starting worker pid=19081 on localhost:11276 at 07:43:04.780
+starting worker pid=19082 on localhost:11276 at 07:43:04.841
+starting worker pid=19083 on localhost:11276 at 07:43:04.900
+starting worker pid=19084 on localhost:11276 at 07:43:04.971
+starting worker pid=19085 on localhost:11276 at 07:43:05.032
+starting worker pid=19086 on localhost:11276 at 07:43:05.089
+starting worker pid=19088 on localhost:11276 at 07:43:05.144
+starting worker pid=19089 on localhost:11276 at 07:43:05.198
+starting worker pid=19090 on localhost:11276 at 07:43:05.252
+starting worker pid=19091 on localhost:11276 at 07:43:05.307
+starting worker pid=19092 on localhost:11276 at 07:43:05.362
+starting worker pid=19093 on localhost:11276 at 07:43:05.417
+starting worker pid=19094 on localhost:11276 at 07:43:05.472
+starting worker pid=19095 on localhost:11276 at 07:43:05.529
+starting worker pid=19096 on localhost:11276 at 07:43:05.582
+starting worker pid=19097 on localhost:11276 at 07:43:05.638
+starting worker pid=19098 on localhost:11276 at 07:43:05.694
+starting worker pid=19099 on localhost:11276 at 07:43:05.754
+starting worker pid=19100 on localhost:11276 at 07:43:05.811
+starting worker pid=19101 on localhost:11276 at 07:43:05.862
+starting worker pid=19102 on localhost:11276 at 07:43:05.914
+starting worker pid=19103 on localhost:11276 at 07:43:05.967
+starting worker pid=19104 on localhost:11276 at 07:43:06.019
+starting worker pid=19105 on localhost:11276 at 07:43:06.068
+starting worker pid=19107 on localhost:11276 at 07:43:06.122
+starting worker pid=19108 on localhost:11276 at 07:43:06.176
+starting worker pid=19109 on localhost:11276 at 07:43:06.230
+starting worker pid=19110 on localhost:11276 at 07:43:06.285
+starting worker pid=19111 on localhost:11276 at 07:43:06.340
+starting worker pid=19112 on localhost:11276 at 07:43:06.392
+starting worker pid=19113 on localhost:11276 at 07:43:06.446
+starting worker pid=19114 on localhost:11276 at 07:43:06.501
+starting worker pid=19115 on localhost:11276 at 07:43:06.556
+starting worker pid=19116 on localhost:11276 at 07:43:06.613
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : error reading from connection
+Error in unserialize(node$con) : e

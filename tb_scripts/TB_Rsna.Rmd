@@ -1,0 +1,453 @@
+---
+title: "Social Network Analysis of the Tuberculosis Co-authorship network from Benin"
+author: "Roseric Azondekon"
+output:
+  html_notebook: default
+  word_document: default
+---
+$\\$
+$\\$
+
+This project is part of my PhD dissertation project. The network has already been assembled.
+
+Let's first load the required packages and the network file:
+$\\$
+
+Loading libraries....
+```{r,warning=FALSE}
+library(igraph)
+```
+$\\$
+
+**Descriptive Network Analysis**
+```{r}
+# tbnet <- read_graph('~/Documents/sna/graphs_old/CAnet.graphml', format = 'graphml')
+tbnet <- read_graph('./graphs/TBnet.graphml', format = 'graphml')
+```
+$\\$
+
+Get a summary of the network:
+```{r}
+summary(tbnet)
+```
+
+*Interpretation:* Our co-authorship network is an undirected multigraph (parallel edges) with **173 authors** and **1937 scientific collaborations**. Each node (author) in the network has 7 attributes: name, country, place, affil, numPub, timesCited and id. Each edge has 8 attributes: key, subject, abstract, year, wosid (Web of science Identification number), journal, title and doi.
+
+
+*Computing Node Centrality Measures:*
+We compute centrality measures such as degree (number of ties to a given author), betweenness (number of shortest paths between alters that go through a particular author), closeness (number of steps required for a particular author to access every other author in the network) and eigenvectors (degree to which an author is connected to other well connected authors in the network), brokerage (degree to which an actor occupies a brokerage position across all pairs of alters) 
+
+*Degree centrality*
+Let's first compute the degree and strength of the nodes in the network:
+```{r}
+d.tbnet <- degree(tbnet)
+s.tbnet <- graph.strength(simplify(tbnet)) # for weighted graph
+```
+ 
+Now, let's plot a histogram of the degree and strength distributions:
+```{r,fig.width=8}
+par(mfrow=c(1,2))
+hist(d.tbnet, col="lightblue", xlab="Vertex Degree", ylab="Frequency", main="Degree distribution")
+hist(s.tbnet, col="pink", xlab="Vertex Strength", ylab="Frequency", main="Strength distribution")
+```
+*Interpretation:* While there is a substantial number of nodes of quite low degree, there are also a non-trivial number of nodes with higher order of degree magnitudes. Given the nature of this distribution, a log-log scale is more effective at summarizing the degree information.
+
+From here, the processing requires our network to be a simple graph. We would therefore change our multigraph to a graph object.
+```{r}
+E(tbnet)$weight <- 1
+tbnet2 <- simplify(tbnet, edge.attr.comb = list(weight="sum",timesCited="sum",numPub="sum",key="concat",subject="concat",year="concat",wosid="concat",journal="concat",title="concat",doi="concat"))
+summary(tbnet2)
+```
+
+<!--  The newly computed undirected graph contains *1792 nodes* and *95707 edges*. Note that the simplify function in R does not capture the number of multiple collaborations between authors. In a previous tutorial, we have computed a simple version of the tbnet network. Let's instead of using the *simplify()* function, load tbnet2 from its previously computed .graphml format: -->
+
+<!-- ```{r} -->
+<!-- # tbnet3 <- read_graph('./graphs_old/CAnet_graph.graphml', format = 'graphml') -->
+<!-- tbnet3 <- read_graph('./graphs/CAnet_weight.graphml', format = 'graphml') -->
+<!-- V(tbnet3)$name <- V(tbnet2)$name -->
+<!-- summary(tbnet3) -->
+<!-- ``` -->
+<!-- *Interpretation:* Note here that tbnet3 has the exact number of nodes and edges as tbnet2. The only difference is there is a weight attribute on every edge. We have removed the name attribute on each node for convenience issue. -->
+
+*Visualization*
+
+Now, let's now visualize our co-authorship graph network tbnet2 using the Kamada and Kawai layout:
+```{r}
+# l.tbnet <- layout.kamada.kawai(tbnet)
+# l.tbnet2 <- layout.kamada.kawai(tbnet2)
+l.tbnet2 <- layout.kamada.kawai(tbnet2)
+```
+
+
+```{r,fig.height=15,fig.width=15}
+# plot(tbnet, layout=l.tbnet, vertex.label=NA, vertex.size=2)
+# plot(tbnet2, layout=l.tbnet2, vertex.label=NA, vertex.size=2, vertex.color='red')
+plot(tbnet2, layout=l.tbnet2, vertex.label=NA, vertex.size=2, vertex.color='blue') # We use l.tbnet2 as layout
+```
+
+```{r}
+d.tbnet <- degree(tbnet2) # Degree of simple graph tbnet2
+V(tbnet2)$degree <- d.tbnet
+dd.tbnet <- degree.distribution(tbnet2) # Compute degree distribution
+d <- 1:max(d.tbnet)-1
+ind <- (dd.tbnet != 0)
+a.nn.deg.tbnet <- graph.knn(tbnet2, V(tbnet2))$knn
+mean(d.tbnet)
+```
+
+Now, ploting degree distribution of the simplified graph.
+```{r,fig.width=8}
+par(mfrow=c(1,2))
+hist(d.tbnet, col="lightblue", xlab="Vertex Degree", ylab="Frequency", main="Degree distribution")
+plot(d[ind], dd.tbnet[ind], log="xy", col="blue", type='p', xlab=c("Log-Degree"), ylab=c("Log-Intensity"),main="Log-Log Degree Distribution")
+```
+*Interpretation:* From the plot on the right, the degrees of the node no clear distribution. Let's investigate the manner in which nodes of different degrees are linked with each other in the coauthorship network. For this purpose, we bring in the notion of the average degree of the neighbors of a given node. We then plot the average neighbor degree against node degree.
+
+```{r,fig.height=7}
+plot(d.tbnet, a.nn.deg.tbnet, log="xy", col="goldenrod", type='p', xlab=c("Log Vertex Degree"), ylab=c("Log Average Neighbor Degree"))
+```
+*Interpretation:* The plot above suggests that while there is a tendency of nodes of higher degrees to link with similar nodes, nodes of lower degree tend to link with nodes of both lower and higher degrees. In other words, while prominent authors with important collaborations tend to collaborate with similar authors, young or less prolific authors tend to collaborate with both prolific and authors with very few collaborations.
+
+
+Let's compute the other 3 node centrality measures:
+```{r}
+A <- get.adjacency(tbnet2, sparse = FALSE)
+g <- network::as.network.matrix(A)
+```
+
+
+*Closeness centrality:* captures the notion that a node is central if it close to many other nodes
+Considering a network $G=(V,E)$ where $V$ is the set of nodes and $E$, the set of edges, the closeness centrality $c_{Cl}(v)$ of a node $v$ is defined as: 
+$$c_{Cl}(v)=\frac{1}{\sum_{u\in V}dist(v,u)}$$
+$dist(v,u)$ is defined as the geodesic distance between the nodes $u,v \in V$.
+```{r}
+cl.tbnet <- closeness(tbnet2)
+V(tbnet2)$closeness <- cl.tbnet
+summary(cl.tbnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(tbnet2, layout=l.tbnet2, main="Closeness centrality", vertex.label="", vertex.size=0.25* sqrt(cl.tbnet*1E6), vertex.color='lightblue')
+```
+
+
+*Betweeness centrality:* summarizes the extent to which a node is located between other pairs of nodes. It relates to the to the perspective that importance relates to where a node is located with respect to the paths in the network graph. According to Freeman, it is defined as:
+$$c_{B}(v)=\frac{\sigma (s,t|v)}{\sum_{s \neq t \neq v \in V}\sigma (s,t)}$$
+where $\sigma(s,t|v)$ is the total number of shortest paths between $s$ and $t$ that pass through $v$, and $\sigma (s,t)$ is the total number of shortest paths between $s$ and $t$ regardless of whether or not they pass through $v$.
+```{r}
+bw.tbnet <- betweenness(tbnet2)
+V(tbnet2)$betweenness <- bw.tbnet
+summary(bw.tbnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(tbnet2, layout=l.tbnet2, main="Betweenness centrality", vertex.label="", vertex.size=4 * sqrt(bw.tbnet/1000), vertex.color='lightgreen')
+```
+
+
+
+*Eigenvector centrality:* seeks to capture the idea that the more central the neighbors of a node are, the more central that node itsel is. According to Bonacich and Katz [Page 48, book Kolaczyk and Csardi, 2nd edition, 2009], the Eigenvector centrality measure is defined as:
+$$c_{E_i}(v)=\alpha \sum_{\{u,v\}\in E}c_{E_i}(u)$$
+
+Where the vector $\mathbf{c}_{E_i}=(c_{E_i}(1),\dots ,c_{E_i}(N_v))^T$ is the solution to the eigenvalue problem $\mathbf{Ac}_{E_i}=\alpha^{-1}\mathbf{c}_{E_i}$, where $\mathbf{A}$ is the adjacency matrix for the network $G$. According to Bonacich, an optimal choice of $\alpha^{-1}$ is the largest eigenvalue of $\mathbf{A}$.
+```{r}
+ev.tbnet <- evcent(tbnet2)$vector
+V(tbnet2)$eigenv <- ev.tbnet
+summary(ev.tbnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(tbnet2, layout=l.tbnet2, main="Eigenvectors centrality", vertex.label="", vertex.size=2 * sqrt(ev.tbnet*10), vertex.color='pink')
+```
+
+
+
+*Visualization highliting Hubs and Authorities*
+```{r,fig.height=15,fig.width=15}
+# par(mfrow=c(1,2))
+# plot(tbnet2, layout=l.tbnet2, main="Hubs", vertex.label="", vertex.size=10 * sqrt(hub.score(tbnet2)$vector), vertex.color='green')
+# plot(tbnet2, layout=l.tbnet2, main="Authorities", vertex.label="", vertex.size=10 *
+# sqrt(authority.score(tbnet2)$vector), vertex.color='red')
+```
+
+```{r}
+V(tbnet2)$hubScore <- hub.score(tbnet2)$vector
+V(tbnet2)$authScore <- authority.score(tbnet2)$vector
+summary(tbnet2)
+```
+Note that the Hub scores and Authority scores are exactly equal to the eigenvectors of the nodes in the network. An exploration of the auth_data frame below helps the reader notice the remark.
+
+```{r}
+auth_data <- data.frame(id=as.numeric(V(tbnet2)$id),name=V(tbnet2)$name,numPub=as.numeric(V(tbnet2)$numPub),timesCited=as.numeric(V(tbnet2)$timesCited),degree=V(tbnet2)$degree,closeness=V(tbnet2)$closeness,betweenness=V(tbnet2)$betweenness,eigenV=V(tbnet2)$eigenv,hubScore=V(tbnet2)$hubScore,authScore=V(tbnet2)$authScore)
+auth_data$affiliation<-V(tbnet2)$place
+auth_data$city<-V(tbnet2)$affil
+auth_data$country<-V(tbnet2)$country
+auth_data$city[which(auth_data$city=='LONDON WC1E 7HT')]<-'LONDON'
+auth_data$city[which(auth_data$city=='LONDON WC1')]<-'LONDON'
+auth_data$city[which(auth_data$city=='LONDON NW3 2QG')]<-'LONDON'
+auth_data$country[which(auth_data$city=='COTONOU' & auth_data$country=='FRANCE')]<-'BENIN'
+auth_data$country[which(V(tbnet2)$country=='MA USA')]<-'USA'
+auth_data$city[which(auth_data$city=='BOBO DIOULASSO 01')]<-'BOBO DIOULASSO'
+
+# Obtaining coordinates
+# library(ggmap)
+# cord<-unlist(geocode(paste(auth_data$city[1],auth_data$country[1],sep=', ')))
+# longlat<-data.frame(id=auth_data$id, name=auth_data$name, long=coord[1:1792],lat=coord[1793:3584])
+# write.csv(longlat,file = '~/Documents/sna/graphs/auth_coordinates.csv')
+
+# Getting node information
+# longlat<-read.csv('./graphs/auth_coordinates.csv',header = T)
+# longlat<-subset(longlat, select = -c(X))
+# auth_data$long<-longlat$long
+# auth_data$lat<-longlat$lat
+
+# Getting edge list and related information
+# eList<-get.edgelist(tbnet2,names = T)
+# colnames(eList)<-c('source','target')
+# eList<-as.data.frame(eList)
+# new1<-eList
+# new2<-eList
+# new1[]<-auth_data$long[match(unlist(eList),auth_data$name)]
+# new2[]<-auth_data$lat[match(unlist(eList),auth_data$name)]
+# edges<-data.frame(id=1:length(E(tbnet2)),source=eList$source,target=eList$target,weight=E(tbnet2)$weight,timesCited=E(tbnet2)$timesCited,long_source=new1$source,lat_source=new2$source,long_target=new1$target,lat_target=new2$target)
+
+```
+
+
+*Characterizing Edges:*
+Edge betweenness centrality extends from the notion of vertex centrality by assigning to each edge a value reflecting the number of shortest paths traversing that edge. We compute edge betweenness to assess which co-authorship collaborations are important for the flow of information. We then present the 10 most important collaborations in our tuberculosis co-authorship network.
+```{r}
+eb <- edge.betweenness(tbnet2)
+E(simplify(tbnet))[order(eb, decreasing=T)[1:10]]
+```
+
+
+*Characterizing Network cohesion:*
+
+In this section, we are going to assess the extent to which subsets of authors are cohesive with the respect to their relation in the co-authorship network. Specifically, **we aim at determining if collaborators (co-authors) of a given author tend to collaborate as well**. **What subset of collaborating authors tend to be more productive in our network?**
+While there are many techniques to determine network cohesion, we choose to investigate local triads and global giant components, cliques detection as well as clustering or communities detection in our tuberculosis co-authorship network.
+
+*Cliques:* According to Kolaczyk and Csardi (2009), cliques are defined as complete subgraphs such that all nodes within the subset are connected by edges. We compute the number of cliques in our tuberculosis co-authorship network, then compute the number and size of the maximal cliques.
+
+```{r}
+clique.number(tbnet2)
+```
+Our tuberculosis co-authorship network contains 28 cliques.
+
+```{r}
+table(sapply(maximal.cliques(tbnet2), length))
+```
+<!-- The table above displays the size and number of maximal cliques. From the table, we can see that our network contains 10 cliques of size 8 and 7 cliques of size 5. It also contains 1 cliques of size 28 and 142 cliques of size 7. Larger cliques sizes range from  102 authors to 365 authors and are all found once across the network. -->
+
+*Density and related notions of relative frequency:*
+Defined as the frequency of realized edges relative to potential edges, the density of a subgraph $H$ in $G$ provides a measure of how close $H$ is to be a clique in $G$. Density values varie between 0 and 1:
+$$den(H)=\frac{|E_H|}{|V_H|(V_H-1)/2}$$
+Here we compute the general density of our tuberculosis co-authorship network.
+
+```{r}
+graph.density(tbnet2)
+```
+
+We assess the relative frequency of $G$ by computing its transitivity defined as:
+$$cl_T = \frac{3\tau_\Delta (G)}{\tau_3 (G)}$$
+where $\tau_\Delta (G)$ is the number of triangles in $G$, and $\tau_3 (G)$ is the number of connected triples (sometimes referred to as 2-star). This measure is also referred to as the fraction of transitive triples. It represents a measure of global clustering of $G$ summarizing the relative frequency with which connected triples close to form triangles.
+```{r}
+transitivity(tbnet2)
+```
+ Another analogue of this measure is the local transitivity defined as:
+ $$cl(v)=\tau_\Delta (v)/\tau_3 (v)$$
+ where $\tau_\Delta (v)$ denotes the number of triangles in $G$ into which $v \in V$ falls and $\tau_3 (v)$ is the number of connected triples in $G$ for which the two edges are both incident to $v$. Here we compute the local transitivity for all the nodes in our tuberculosis co-authorship network.
+ 
+```{r}
+tr<-transitivity(tbnet2,'local',vids = 1:length(V(tbnet2)))
+V(tbnet2)$transitivity<-tr
+auth_data$transitivity<-tr
+```
+
+
+*Connectivity, Cuts, and Flows:*
+In this section, we measure how close our tuberculosis co-authorship is close to separate into distincts subgraphs. We are also interested in assessing how well information flows in the network.
+We first start with the concept of connectedness. Since our network is an undirected graph, we do not consider the idea of weak and strong connectivity. A graph $G$ is said to be connected if every node in $G$ is reachable from every other node.
+```{r}
+is.connected(tbnet2)
+```
+From the output above, we clearly conclude that our co-authorship network is not connected.
+
+Often time, one of the connected components can dominate the others, hence the idea of *giant component*. Let's then census our co-authorship:
+```{r}
+comps<-decompose.graph(tbnet2)
+table(sapply(comps,vcount))
+```
+
+From the output of the census of all connected components of the network above, we can see that there are 2 main components containing respectively 16 and 157 nodes. There is a giant component containing $157/173\approx 90.8\%$ of all the vertices in the network.
+
+We further devote closer attention to this giant component.
+```{r}
+tbnet2.gc <- decompose.graph(tbnet2)[[1]]
+summary(tbnet2.gc)
+```
+ 
+ Let's plot this giant component:
+ 
+```{r,fig.height=15,fig.width=15}
+plot(tbnet2.gc, layout=layout.kamada.kawai(tbnet2.gc), vertex.label=NA, vertex.size=2, edge.width=0.08, vertex.color='lightblue')
+```
+
+One important characteristic observed in giant component is the so-called *small-world* property which refers to the situation wherein **the shortest-path distance between pairs of nodes is generally small** and **the clustering is relatively high**. For our tuberculosis co-authorship network, let's compute the average path length
+```{r}
+average.path.length(tbnet2.gc)
+```
+and the longest of paths
+```{r}
+diameter(tbnet2.gc)
+```
+
+Let's assess the transitivity of our giant component:
+```{r}
+transitivity(tbnet2.gc)
+```
+
+*Interpretation:* **We can see that the average path length of the giant component of our co-authorship network is small and the longest of paths is not much bigger. Hence our giant component has all the characteristics of a small-world.** In addition, the clustering in this network is high indicating that **61% of the connected triples are close to form triangles**.
+
+
+We investigate the concepts of vertex and edge cuts derived from the concept of vertex(edge) connectivity. The vertex (edge) connectivity of a graph $G$ is the largest integer such that $G$ is k-vertex- (edge-) connected.
+
+```{r}
+vertex.connectivity(tbnet2.gc)
+```
+
+```{r}
+edge.connectivity(tbnet2.gc)
+```
+In the case of the giant component of our co-authorship network, the vertex connectivity is equal to 1 while the edge connectivity is equal to 2, **thus requires the removal of only a single well-chosen node (author) or 2 collaboration ties in order to break this subgraph into additional components**.
+
+A set of nodes (edges) that disconnects the graph is called a *vertex cut (edge cut)*. A single node (author) that disconnects of such vertices is called a *cut vertex* and can provide a sense of where a network is vulnerable. Let's identify such weak points in our co-authorship network: 
+```{r}
+tbnet2.cut.vertices <- articulation.points(tbnet2.gc)
+tbnet2.cut.vertices
+```
+The above listed author constitutes the only weak *articulation point* of our co-authorship network but also the most important nodes of our network.
+
+```{r}
+length(tbnet2.cut.vertices)
+```
+In our tuberculosis co-authorship network, less than **1%** of the nodes are cut vertices meaning that the vulnerability of the network is dependant on a very small set of authors in the co-authorship network.
+
+
+**Graph Partitioning:**
+Regularly framed as community detection problem, graph partitioning is an unsupervized method used in the analysis of network data to find subsets of nodes that demonstrate a 'cohesiveness' with respect to thei underlying relational patterns. Cohesive subsets of nodes generally are well connected among themselves and are well separated from the other nodes in the graph. Here, we perform two well established methods of graph partitioning: *Hierarchical clustering* and *Spectral clustering*.
+
+*Hierarchical Clustering:*
+Hierarchical clustering methods are of two kinds:
+- agglomerative: "based on the successive coarsening of partitions through the process of merging", it uses modularity as metrics.
+- divisive: "based on the successive refinement of partitions through the process of splitting"
+
+Here, we apply the agglomerative method on our tuberculosis co-authorship network:
+```{r}
+com.tbnet2 <- fastgreedy.community(tbnet2)
+V(tbnet2)$community <- com.tbnet2$membership
+length(com.tbnet2)
+```
+The agglomerative hierarchical clustering identifies 6 communities in our co-authorship network.
+```{r}
+sizes(com.tbnet2)
+```
+The largest community contains 58 authors. Medium size communities contain between 14 and 29 authors.
+
+Let's now visualize the communities:
+```{r,fig.height=15,fig.width=15}
+plot(com.tbnet2, tbnet2,vertex.label='',
+     layout=l.tbnet2,
+     mark.groups = NULL,
+     # vertex.size = 3,
+     # edge.color = memb.tbnet2,
+     edge.width = 0.08,
+     vertex.size=1+4 * sqrt(bw.tbnet/1000)
+     )
+```
+
+
+```{r}
+gc.com <- fastgreedy.community(tbnet2.gc)
+length(gc.com)
+```
+ There are 9 communities in the giant component of our network.
+ 
+ 
+```{r}
+sizes(gc.com)
+```
+The 9 communities contain between 5 and 49 authors.
+
+Let's now visualize the 9 communities in the giant component:
+```{r}
+l.gc<-layout.kamada.kawai(tbnet2.gc)
+bw.gc<-betweenness(tbnet2.gc)
+V(tbnet2.gc)$community <- membership(gc.com)
+```
+
+```{r,fig.height=15,fig.width=15}
+plot(gc.com, tbnet2.gc,vertex.label='',
+     # layout=l.tbnet2,
+     layout = l.gc,
+     mark.groups = NULL,
+     # vertex.size = 3,
+     # edge.color = memb.tbnet2,
+     edge.width = 0.06,
+     vertex.size=1+4 * sqrt(bw.gc/1000)
+     )
+```
+
+Let's plot the 9 communities separately:
+```{r,fig.width=20,fig.height=40}
+par(cex.main=3)
+par(mfrow=c(5,2))
+# Plot Original giant component graph
+plot(gc.com, tbnet2.gc,vertex.label='',
+     main = 'Main component',
+     # layout=l.tbnet2,
+     layout = l.gc,
+     mark.groups = NULL,
+     # vertex.size = 3,
+     # edge.color = memb.tbnet2,
+     edge.width = 0.05,
+     vertex.size=1+4 * sqrt(bw.gc/1000)
+     )
+
+for(i in 1:9){
+  g <- which(V(tbnet2.gc)$community==i)
+  G.group <- subgraph(tbnet2.gc, g)
+  plot(G.group,vertex.label='',
+     main = paste('Community/Partition ',i),
+     # layout=l.tbnet2,
+     layout = l.gc[g,],
+     mark.groups = NULL,
+     vertex.color = gc.com$membership[g],
+     # vertex.size = 3,
+     # edge.color = memb.tbnet2,
+     edge.width = 0.06,
+     vertex.size=1+4 * sqrt(bw.gc/1000)
+     )
+}
+```
+
+We finally save all our generated R objects for later use.
+```{r}
+save(tbnet, file = './Rdata/TBnet.rda')
+save(tbnet2, file = './Rdata/TBnet2.rda')
+save(auth_data, file = './Rdata/TBauth_data.rda')
+save(edges, file = './Rdata/TBedges.rda')
+save(tbnet2.gc, file = './Rdata/TBnet2.gc.rda')
+```
+```{r}
+# source('plotly_map.R')
+```
+$\\$
+
+<!-- We finally plot the collaboration map using Plotly and available [HERE](https://plot.ly/~rosericazondekon/61.embed). -->
+
+<!-- <iframe src="https://plot.ly/~rosericazondekon/61.embed" height="800" width="100%"     scrolling="no" seamless="seamless" frameBorder="0"></iframe> -->
+<!-- <img src="https://plot.ly/~rosericazondekon/61.png"> -->
+
+$\\$
+$\\$
+
+
+**NEXT TUTORIAL:** [Mathematical Modeling for Network Graphs](http://#)

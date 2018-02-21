@@ -1,0 +1,452 @@
+---
+title: "Social Network Analysis of the HIV/AIDS Co-authorship network from Benin"
+author: "Roseric Azondekon"
+output:
+  html_notebook: default
+  word_document: default
+---
+$\\$
+$\\$
+
+This project is part of my PhD dissertation project. The network has already been assembled.
+
+Let's first load the required packages and the network file:
+$\\$
+
+Loading libraries....
+```{r,warning=FALSE}
+library(igraph)
+```
+$\\$
+
+**Descriptive Network Analysis**
+```{r}
+# mnet <- read_graph('~/Documents/sna/graphs_old/CAnet.graphml', format = 'graphml')
+mnet <- read_graph('./graphs/HIVnet.graphml', format = 'graphml')
+```
+$\\$
+
+Get a summary of the network:
+```{r}
+summary(mnet)
+```
+
+*Interpretation:* Our co-authorship network is an undirected multigraph (parallel edges) with **516 authors** and **5114 scientific collaborations**. Each node (author) in the network has 2 attributes: name and id. Each edge has 8 attributes: key, subject, abstract, year, wosid (Web of science Identification number), journal, title and doi.
+
+
+*Computing Node Centrality Measures:*
+We compute centrality measures such as degree (number of ties to a given author), betweenness (number of shortest paths between alters that go through a particular author), closeness (number of steps required for a particular author to access every other author in the network) and eigenvectors (degree to which an author is connected to other well connected authors in the network), brokerage (degree to which an actor occupies a brokerage position across all pairs of alters) 
+
+*Degree centrality*
+Let's first compute the degree and strength of the nodes in the network:
+```{r}
+d.mnet <- degree(mnet)
+s.mnet <- graph.strength(simplify(mnet)) # for weighted graph
+```
+ 
+Now, let's plot a histogram of the degree and strength distributions:
+```{r,fig.width=8}
+par(mfrow=c(1,2))
+hist(d.mnet, col="lightblue", xlab="Vertex Degree", ylab="Frequency", main="Degree distribution")
+hist(s.mnet, col="pink", xlab="Vertex Strength", ylab="Frequency", main="Strength distribution")
+```
+*Interpretation:* While there is a substantial number of nodes of quite low degree, there are also a non-trivial number of nodes with higher order of degree magnitudes. Given the nature of this distribution, a log-log scale is more effective at summarizing the degree information.
+
+From here, the processing requires our network to be a simple graph. We would therefore change our multigraph to a graph object.
+```{r}
+E(mnet)$weight <- 1
+mnet2 <- simplify(mnet, edge.attr.comb = list(weight="sum",timesCited="sum",numPub="sum",key="concat",subject="concat",year="concat",wosid="concat",journal="concat",title="concat",doi="concat"))
+summary(mnet2)
+```
+
+ The newly computed undirected graph contains *516 nodes* and *3966 edges*. Note that the simplify function in R does not capture the number of multiple collaborations between authors. In a previous tutorial, we have computed a simple version of the mnet network. Let's instead of using the *simplify()* function, load mnet2 from its previously computed .graphml format:
+
+<!-- ```{r} -->
+<!-- # mnet3 <- read_graph('./graphs_old/CAnet_graph.graphml', format = 'graphml') -->
+<!-- mnet3 <- read_graph('./graphs/CAnet_weight.graphml', format = 'graphml') -->
+<!-- V(mnet3)$name <- V(mnet2)$name -->
+<!-- summary(mnet3) -->
+<!-- ``` -->
+<!-- *Interpretation:* Note here that mnet3 has the exact number of nodes and edges as mnet2. The only difference is there is a weight attribute on every edge. We have removed the name attribute on each node for convenience issue. -->
+
+*Visualization*
+
+Now, let's now visualize our co-authorship graph network mnet2 using the Kamada and Kawai layout:
+```{r}
+# l.mnet <- layout.kamada.kawai(mnet)
+# l.mnet2 <- layout.kamada.kawai(mnet2)
+l.mnet2 <- layout.kamada.kawai(mnet2)
+```
+
+
+```{r,fig.height=15,fig.width=15}
+# plot(mnet, layout=l.mnet, vertex.label=NA, vertex.size=2)
+# plot(mnet2, layout=l.mnet2, vertex.label=NA, vertex.size=2, vertex.color='red')
+plot(mnet2, layout=l.mnet2, vertex.label=NA, vertex.size=2, vertex.color='blue') # We use l.mnet2 as layout
+```
+
+```{r}
+d.mnet <- degree(mnet2) # Degree of simple graph mnet2
+V(mnet2)$degree <- d.mnet
+dd.mnet <- degree.distribution(mnet2) # Compute degree distribution
+d <- 1:max(d.mnet)-1
+ind <- (dd.mnet != 0)
+a.nn.deg.mnet <- graph.knn(mnet2, V(mnet2))$knn
+mean(d.mnet)
+```
+
+Now, ploting degree distribution of the simplified graph.
+```{r,fig.width=8}
+par(mfrow=c(1,2))
+hist(d.mnet, col="lightblue", xlab="Vertex Degree", ylab="Frequency", main="Degree distribution")
+plot(d[ind], dd.mnet[ind], log="xy", col="blue", type='p', xlab=c("Log-Degree"), ylab=c("Log-Intensity"),main="Log-Log Degree Distribution")
+```
+*Interpretation:* From the plot on the right, the degrees of the node seem to follow a heavy right-tail distribution, characteristic of a power law distribution with an average distribution of $15.37$. Let's investigate the manner in which nodes of different degrees are linked with each other in the coauthorship network. For this purpose, we bring in the notion of the average degree of the neighbors of a given node. We then plot the average neighbor degree against node degree.
+
+```{r,fig.height=7}
+plot(d.mnet, a.nn.deg.mnet, log="xy", col="goldenrod", type='p', xlab=c("Log Vertex Degree"), ylab=c("Log Average Neighbor Degree"))
+```
+*Interpretation:* The plot above suggests that while there is a tendency of nodes of higher degrees to link with similar nodes, nodes of lower degree tend to link with nodes of both lower and higher degrees. In other words, while prominent authors with important collaborations tend to collaborate with similar authors, young or less prolific authors tend to collaborate with both prolific and authors with very few collaborations.
+
+
+Let's compute the other 3 node centrality measures:
+```{r}
+A <- get.adjacency(mnet2, sparse = FALSE)
+g <- network::as.network.matrix(A)
+```
+
+
+*Closeness centrality:* captures the notion that a node is central if it close to many other nodes
+Considering a network $G=(V,E)$ where $V$ is the set of nodes and $E$, the set of edges, the closeness centrality $c_{Cl}(v)$ of a node $v$ is defined as: 
+$$c_{Cl}(v)=\frac{1}{\sum_{u\in V}dist(v,u)}$$
+$dist(v,u)$ is defined as the geodesic distance between the nodes $u,v \in V$.
+```{r}
+cl.mnet <- closeness(mnet2)
+V(mnet2)$closeness <- cl.mnet
+summary(cl.mnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(mnet2, layout=l.mnet2, main="Closeness centrality", vertex.label="", vertex.size=0.75 * sqrt(cl.mnet*1E6), vertex.color='lightblue')
+```
+
+
+*Betweeness centrality:* summarizes the extent to which a node is located between other pairs of nodes. It relates to the to the perspective that importance relates to where a node is located with respect to the paths in the network graph. According to Freeman, it is defined as:
+$$c_{B}(v)=\frac{\sigma (s,t|v)}{\sum_{s \neq t \neq v \in V}\sigma (s,t)}$$
+where $\sigma(s,t|v)$ is the total number of shortest paths between $s$ and $t$ that pass through $v$, and $\sigma (s,t)$ is the total number of shortest paths between $s$ and $t$ regardless of whether or not they pass through $v$.
+```{r}
+bw.mnet <- betweenness(mnet2)
+V(mnet2)$betweenness <- bw.mnet
+summary(bw.mnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(mnet2, layout=l.mnet2, main="Betweenness centrality", vertex.label="", vertex.size=1 * sqrt(bw.mnet/1000), vertex.color='lightgreen')
+```
+
+
+
+*Eigenvector centrality:* seeks to capture the idea that the more central the neighbors of a node are, the more central that node itsel is. According to Bonacich and Katz [Page 48, book Kolaczyk and Csardi, 2nd edition, 2009], the Eigenvector centrality measure is defined as:
+$$c_{E_i}(v)=\alpha \sum_{\{u,v\}\in E}c_{E_i}(u)$$
+
+Where the vector $\mathbf{c}_{E_i}=(c_{E_i}(1),\dots ,c_{E_i}(N_v))^T$ is the solution to the eigenvalue problem $\mathbf{Ac}_{E_i}=\alpha^{-1}\mathbf{c}_{E_i}$, where $\mathbf{A}$ is the adjacency matrix for the network $G$. According to Bonacich, an optimal choice of $\alpha^{-1}$ is the largest eigenvalue of $\mathbf{A}$.
+```{r}
+ev.mnet <- evcent(mnet2)$vector
+V(mnet2)$eigenv <- ev.mnet
+summary(ev.mnet)
+```
+```{r,fig.height=15,fig.width=15}
+plot(mnet2, layout=l.mnet2, main="Eigenvectors centrality", vertex.label="", vertex.size=2 * sqrt(ev.mnet*10), vertex.color='pink')
+```
+
+
+
+*Visualization highliting Hubs and Authorities*
+```{r,fig.height=15,fig.width=15}
+# par(mfrow=c(1,2))
+# plot(mnet2, layout=l.mnet2, main="Hubs", vertex.label="", vertex.size=10 * sqrt(hub.score(mnet2)$vector), vertex.color='green')
+# plot(mnet2, layout=l.mnet2, main="Authorities", vertex.label="", vertex.size=10 *
+# sqrt(authority.score(mnet2)$vector), vertex.color='red')
+```
+
+```{r}
+V(mnet2)$hubScore <- hub.score(mnet2)$vector
+V(mnet2)$authScore <- authority.score(mnet2)$vector
+summary(mnet2)
+```
+Note that the Hub scores and Authority scores are exactly equal to the eigenvectors of the nodes in the network. An exploration of the auth_data frame below helps the reader notice the remark.
+
+```{r}
+auth_data <- data.frame(id=as.numeric(V(mnet2)$id),name=V(mnet2)$name,numPub=as.numeric(V(mnet2)$numPub),timesCited=as.numeric(V(mnet2)$timesCited),degree=V(mnet2)$degree,closeness=V(mnet2)$closeness,betweenness=V(mnet2)$betweenness,eigenV=V(mnet2)$eigenv,hubScore=V(mnet2)$hubScore,authScore=V(mnet2)$authScore)
+auth_data$affiliation<-V(mnet2)$place
+auth_data$city<-V(mnet2)$affil
+auth_data$country<-V(mnet2)$country
+auth_data$city[which(auth_data$city=='LONDON WC1E 7HT')]<-'LONDON'
+auth_data$city[which(auth_data$city=='LONDON WC1')]<-'LONDON'
+auth_data$city[which(auth_data$city=='LONDON NW3 2QG')]<-'LONDON'
+auth_data$country[which(auth_data$city=='COTONOU' & auth_data$country=='FRANCE')]<-'BENIN'
+auth_data$country[which(V(mnet2)$country=='MA USA')]<-'USA'
+auth_data$city[which(auth_data$city=='BOBO DIOULASSO 01')]<-'BOBO DIOULASSO'
+
+# Obtaining coordinates
+# library(ggmap)
+# cord<-unlist(geocode(paste(auth_data$city[1],auth_data$country[1],sep=', ')))
+# longlat<-data.frame(id=auth_data$id, name=auth_data$name, long=coord[1:1792],lat=coord[1793:3584])
+# write.csv(longlat,file = '~/Documents/sna/graphs/auth_coordinates.csv')
+
+# Getting node information
+# longlat<-read.csv('./graphs/auth_coordinates.csv',header = T)
+# longlat<-subset(longlat, select = -c(X))
+# auth_data$long<-longlat$long
+# auth_data$lat<-longlat$lat
+# 
+# # Getting edge list and related information
+# eList<-get.edgelist(mnet2,names = T)
+# colnames(eList)<-c('source','target')
+# eList<-as.data.frame(eList)
+# new1<-eList
+# new2<-eList
+# new1[]<-auth_data$long[match(unlist(eList),auth_data$name)]
+# new2[]<-auth_data$lat[match(unlist(eList),auth_data$name)]
+# edges<-data.frame(id=1:length(E(mnet2)),source=eList$source,target=eList$target,weight=E(mnet2)$weight,timesCited=E(mnet2)$timesCited,long_source=new1$source,lat_source=new2$source,long_target=new1$target,lat_target=new2$target)
+```
+
+
+*Characterizing Edges:*
+Edge betweenness centrality extends from the notion of vertex centrality by assigning to each edge a value reflecting the number of shortest paths traversing that edge. We compute edge betweenness to assess which co-authorship collaborations are important for the flow of information. We then present the 10 most important collaborations in our HIV/AIDS co-authorship network.
+```{r}
+eb <- edge.betweenness(mnet2)
+E(simplify(mnet))[order(eb, decreasing=T)[1:10]]
+```
+
+
+*Characterizing Network cohesion:*
+
+In this section, we are going to assess the extent to which subsets of authors are cohesive with the respect to their relation in the co-authorship network. Specifically, **we aim at determining if collaborators (co-authors) of a given author tend to collaborate as well**. **What subset of collaborating authors tend to be more productive in our network?**
+While there are many techniques to determine network cohesion, we choose to investigate local triads and global giant components, cliques detection as well as clustering or communities detection in our HIV/AIDS co-authorship network.
+
+*Cliques:* According to Kolaczyk and Csardi (2009), cliques are defined as complete subgraphs such that all nodes within the subset are connected by edges. We compute the number of cliques in our HIV/AIDS co-authorship network, then compute the number and size of the maximal cliques.
+
+```{r}
+clique.number(mnet2)
+```
+Our HIV/AIDS co-authorship network contains 29 maximal cliques.
+
+```{r}
+table(sapply(maximal.cliques(mnet2), length))
+```
+<!-- The table above displays the size and number of maximal cliques. From the table, we can see that our network contains 9 cliques of size 2 and 14 cliques of size 3. It also contains 155 cliques of size 8 and 142 cliques of size 7. Larger cliques sizes range from  102 authors to 365 authors and are all found once across the network. -->
+
+*Density and related notions of relative frequency:*
+Defined as the frequency of realized edges relative to potential edges, the density of a subgraph $H$ in $G$ provides a measure of how close $H$ is to be a clique in $G$. Density values varie between 0 and 1:
+$$den(H)=\frac{|E_H|}{|V_H|(V_H-1)/2}$$
+Here we compute the general density of our HIV/AIDS co-authorship network.
+
+```{r}
+graph.density(mnet2)
+```
+
+We assess the relative frequency of $G$ by computing its transitivity defined as:
+$$cl_T = \frac{3\tau_\Delta (G)}{\tau_3 (G)}$$
+where $\tau_\Delta (G)$ is the number of triangles in $G$, and $\tau_3 (G)$ is the number of connected triples (sometimes referred to as 2-star). This measure is also referred to as the fraction of transitive triples. It represents a measure of global clustering of $G$ summarizing the relative frequency with which connected triples close to form triangles.
+```{r}
+transitivity(mnet2)
+```
+ Another analogue of this measure is the local transitivity defined as:
+ $$cl(v)=\tau_\Delta (v)/\tau_3 (v)$$
+ where $\tau_\Delta (v)$ denotes the number of triangles in $G$ into which $v \in V$ falls and $\tau_3 (v)$ is the number of connected triples in $G$ for which the two edges are both incident to $v$. Here we compute the local transitivity for all the nodes in our HIV/AIDS co-authorship network.
+ 
+```{r}
+tr<-transitivity(mnet2,'local',vids = 1:length(V(mnet2)))
+V(mnet2)$transitivity<-tr
+auth_data$transitivity<-tr
+```
+
+
+*Connectivity, Cuts, and Flows:*
+In this section, we measure how close our HIV/AIDS co-authorship is close to separate into distincts subgraphs. We are also interested in assessing how well information flows in the network.
+We first start with the concept of connectedness. Since our network is an undirected graph, we do not consider the idea of weak and strong connectivity. A graph $G$ is said to be connected if every node in $G$ is reachable from every other node.
+```{r}
+is.connected(mnet2)
+```
+From the output above, we clearly conclude that our co-authorship network is not connected.
+
+Often time, one of the connected components can dominate the others, hence the idea of *giant component*. Let's then census our co-authorship:
+```{r}
+comps<-decompose.graph(mnet2)
+table(sapply(comps,vcount))
+```
+
+From the output of the census of all connected components of the network above, we can see that there clearly is a giant component containing $457/516\approx 88.6\%$ of all the vertices in the network with none of the other components alone carrying even $1\%$ of the vertices.
+
+We further devote closer attention to this giant component.
+```{r}
+mnet2.gc <- decompose.graph(mnet2)[[1]]
+summary(mnet2.gc)
+```
+ 
+ Let's plot this giant component:
+ 
+```{r,fig.height=15,fig.width=15}
+plot(mnet2.gc, layout=layout.kamada.kawai(mnet2.gc), vertex.label=NA, vertex.size=2, edge.width=0.08, vertex.color='lightblue')
+```
+
+One important characteristic observed in giant component is the so-called *small-world* property which refers to the situation wherein **the shortest-path distance between pairs of nodes is generally small** and **the clustering is relatively high**. For our HIV/AIDS co-authorship network, let's compute the average path length
+```{r}
+average.path.length(mnet2.gc)
+```
+and the longest of paths
+```{r}
+diameter(mnet2.gc)
+```
+
+Let's assess the transitivity of our giant component:
+```{r}
+transitivity(mnet2.gc)
+```
+
+*Interpretation:* **We can see that the average path length of the giant component of our co-authorship network is small and the longest of paths is not much bigger. Hence our giant component has all the characteristics of a small-world.** In addition, the clustering in this network is very large indicating that **47.7% of the connected triples are close to form triangles**.
+
+
+We investigate the concepts of vertex and edge cuts derived from the concept of vertex(edge) connectivity. The vertex (edge) connectivity of a graph $G$ is the largest integer such that $G$ is k-vertex- (edge-) connected.
+
+```{r}
+vertex.connectivity(mnet2.gc)
+```
+
+```{r}
+edge.connectivity(mnet2.gc)
+```
+In the case of the giant component of our co-authorship network, the vertex connectivity is equal to 1 while edge connectivity is equal to 3, **thus requires the removal of only a single well-chosen node (author) or 3 collaboration ties in order to break this subgraph into additional components**.
+
+A set of nodes (edges) that disconnects the graph is called a *vertex cut (edge cut)*. A single node (author) that disconnects of such vertices is called a *cut vertex* and can provide a sense of where a network is vulnerable. Let's identify such weak points in our co-authorship network: 
+```{r}
+mnet2.cut.vertices <- articulation.points(mnet2.gc)
+mnet2.cut.vertices
+```
+The above listed authors constitute the weak *articulation points* of our co-authorship network but also the most important nodes of our network.
+
+```{r}
+length(mnet2.cut.vertices)
+```
+In our HIV/AIDS co-authorship network, less than **0.1%** of the nodes are cut vertices meaning that the vulnerability of the network is dependant on a very small set of authors in the co-authorship network.
+
+
+**Graph Partitioning:**
+Regularly framed as community detection problem, graph partitioning is an unsupervized method used in the analysis of network data to find subsets of nodes that demonstrate a 'cohesiveness' with respect to thei underlying relational patterns. Cohesive subsets of nodes generally are well connected among themselves and are well separated from the other nodes in the graph. Here, we perform two well established methods of graph partitioning: *Hierarchical clustering* and *Spectral clustering*.
+
+*Hierarchical Clustering:*
+Hierarchical clustering methods are of two kinds:
+- agglomerative: "based on the successive coarsening of partitions through the process of merging", it uses modularity as metrics.
+- divisive: "based on the successive refinement of partitions through the process of splitting"
+
+Here, we apply the agglomerative method on our HIV/AIDS co-authorship network:
+```{r}
+com.mnet2 <- fastgreedy.community(mnet2)
+V(mnet2)$community <- com.mnet2$membership
+length(com.mnet2)
+```
+The agglomerative hierarchical clustering identifies 24 communities in our co-authorship network.
+```{r}
+sizes(com.mnet2)
+```
+Large communities contain between 55 and 108 authors. Medium size communities contain between 10 and 47 authors.
+
+Let's now visualize the communities:
+```{r,fig.height=15,fig.width=15}
+plot(com.mnet2, mnet2,vertex.label='',
+     layout=l.mnet2,
+     mark.groups = NULL,
+     # vertex.size = 3,
+     # edge.color = memb.mnet2,
+     edge.width = 0.08,
+     vertex.size=1+1 * sqrt(bw.mnet/1000)
+     )
+```
+
+
+```{r}
+gc.com <- fastgreedy.community(mnet2.gc)
+length(gc.com)
+```
+ There's only 12 communities in the giant component of our network.
+ 
+ 
+```{r}
+sizes(gc.com)
+```
+The 7 communities contain between 5 and 107 authors.
+
+Let's now visualize the 12 communities in the giant component:
+```{r}
+l.gc<-layout.kamada.kawai(mnet2.gc)
+bw.gc<-betweenness(mnet2.gc)
+V(mnet2.gc)$community <- membership(gc.com)
+```
+
+```{r,fig.height=15,fig.width=15}
+plot(gc.com, mnet2.gc,vertex.label='',
+     # layout=l.mnet2,
+     layout = l.gc,
+     mark.groups = NULL,
+     # vertex.size = 3,
+     # edge.color = memb.mnet2,
+     edge.width = 0.06,
+     vertex.size=1+1 * sqrt(bw.gc/1000)
+     )
+```
+
+Let's plot the 12 communities separately:
+```{r,fig.width=20,fig.height=40,warning=FALSE}
+par(cex.main=3)
+par(mfrow=c(6,2))
+# Plot Original giant component graph
+# plot(gc.com, mnet2.gc,vertex.label='',
+#      main = 'Main component',
+#      # layout=l.mnet2,
+#      layout = l.gc,
+#      mark.groups = NULL,
+#      # vertex.size = 3,
+#      # edge.color = memb.mnet2,
+#      edge.width = 0.05,
+#      vertex.size=1+1 * sqrt(bw.gc/1000)
+#      )
+
+for(i in 1:12){
+  g <- which(V(mnet2.gc)$community==i)
+  G.group <- subgraph(mnet2.gc, g)
+  plot(G.group,vertex.label='',
+     main = paste('Community/Partition ',i),
+     # layout=l.mnet2,
+     layout = l.gc[g,],
+     mark.groups = NULL,
+     vertex.color = gc.com$membership[g],
+     # vertex.size = 3,
+     # edge.color = memb.mnet2,
+     edge.width = 0.06,
+     vertex.size=1+1 * sqrt(bw.gc/1000)
+     )
+}
+```
+
+We finally save all our generated R objects for later use.
+```{r}
+save(mnet, file = './Rdata/HIVmnet.rda')
+save(mnet2, file = './Rdata/HIVmnet2.rda')
+save(auth_data, file = './Rdata/HIVauth_data.rda')
+save(edges, file = './Rdata/HIVedges.rda')
+save(mnet2.gc, file = './Rdata/HIVmnet2.gc.rda')
+```
+```{r}
+# source('plotly_map.R')
+```
+$\\$
+
+<!-- We finally plot the collaboration map using Plotly and available [HERE](https://plot.ly/~rosericazondekon/61.embed). -->
+
+<!-- <iframe src="https://plot.ly/~rosericazondekon/61.embed" height="800" width="100%"     scrolling="no" seamless="seamless" frameBorder="0"></iframe> -->
+<!-- <img src="https://plot.ly/~rosericazondekon/61.png"> -->
+
+$\\$
+$\\$
+
+
+**NEXT TUTORIAL:** [Mathematical Modeling for Network Graphs](http://#)

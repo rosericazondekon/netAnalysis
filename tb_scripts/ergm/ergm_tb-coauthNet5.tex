@@ -1,0 +1,26 @@
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l D{)}{)}{11)3} D{)}{)}{11)3} D{)}{)}{11)3} }
+\toprule
+ & \multicolumn{1}{c}{Model~1} & \multicolumn{1}{c}{Model~2} & \multicolumn{1}{c}{Model~3} \\
+\midrule
+edges                          & -2.19 \; (0.03)^{***} & -7.84 \; (0.16)^{***} & -7.86 \; (0.17)^{***} \\
+nodecov.timesCited             &                       & 0.01 \; (0.00)^{***}  & 0.01 \; (0.00)^{***}  \\
+nodecov.degree                 &                       & 0.08 \; (0.00)^{***}  & 0.07 \; (0.00)^{***}  \\
+nodecov.numPub                 &                       & -0.05 \; (0.01)^{**}  & 0.01 \; (0.02)        \\
+nodematch.communitySBM         &                       & 6.02 \; (0.13)^{***}  & 6.12 \; (0.14)^{***}  \\
+nodematch.collabType           &                       & 0.83 \; (0.10)^{***}  & 0.90 \; (0.10)^{***}  \\
+nodefactor.collabType.NATIONAL &                       &                       & -0.40 \; (0.09)^{***} \\
+nodefactor.collabType.REGIONAL &                       &                       & 0.22 \; (0.08)^{**}   \\
+\midrule
+AIC                            & 9737.42               & 3776.48               & 3747.34               \\
+BIC                            & 9745.03               & 3822.12               & 3808.20               \\
+Log Likelihood                 & -4867.71              & -1882.24              & -1865.67              \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
+\end{tabular}
+\caption{ERGM of the TB Co-authorship Network.}
+\label{tab:tergm}
+\end{center}
+\end{table}

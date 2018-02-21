@@ -1,0 +1,28 @@
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l D{)}{)}{11)3} D{)}{)}{11)3} D{)}{)}{11)3} D{)}{)}{11)3} }
+\toprule
+ & \multicolumn{1}{c}{Model~2a} & \multicolumn{1}{c}{Model~2b} & \multicolumn{1}{c}{Model~2c} & \multicolumn{1}{c}{Model~2d} \\
+\midrule
+edges                          & -5.18 \; (0.02)^{***} & -8.73 \; (0.05)^{***} & -8.68 \; (0.06)^{***} & -7.86 \; (0.09)^{***} \\
+nodecov.timesCited             &                       & 0.00 \; (0.00)^{***}  & 0.00 \; (0.00)^{***}  & 0.00 \; (0.00)^{***}  \\
+nodecov.degree                 &                       & 0.12 \; (0.00)^{***}  & 0.11 \; (0.00)^{***}  & 0.10 \; (0.00)^{***}  \\
+nodecov.numPub                 &                       & -0.10 \; (0.01)^{***} & -0.06 \; (0.01)^{***} & -0.03 \; (0.01)       \\
+nodematch.community            &                       & 4.60 \; (0.05)^{***}  & 4.61 \; (0.05)^{***}  & 4.46 \; (0.05)^{***}  \\
+nodematch.collabType           &                       & 0.52 \; (0.04)^{***}  & 0.50 \; (0.04)^{***}  & 0.59 \; (0.04)^{***}  \\
+nodefactor.collabType.NATIONAL &                       &                       & -0.29 \; (0.03)^{***} & -0.25 \; (0.04)^{***} \\
+nodefactor.collabType.REGIONAL &                       &                       & 0.14 \; (0.03)^{***}  & 0.21 \; (0.03)^{***}  \\
+edgecov.memory                 &                       &                       &                       & 0.37 \; (0.04)^{***}  \\
+edgecov.timecov1               &                       &                       &                       & -0.08 \; (0.02)^{***} \\
+\midrule
+AIC                            & 5591754.39            & 5563258.81            & 5563125.93            & 3715452.45            \\
+BIC                            & 5591781.15            & 5563352.48            & 5563246.37            & 3715595.64            \\
+Log Likelihood                 & -2795875.19           & -2781622.40           & -2781553.96           & -1857715.22           \\
+\bottomrule
+\multicolumn{5}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
+\end{tabular}
+\caption{Temporal ERGM of HIV/AIDS Co-authorship Network.}
+\label{tab:hiv_tergm}
+\end{center}
+\end{table}

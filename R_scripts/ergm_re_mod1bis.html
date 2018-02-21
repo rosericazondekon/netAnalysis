@@ -1,0 +1,4414 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title></title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p>This project is part of my PhD dissertation project.
+This section follows from the first section dedicated to the Mathematical Modeling of our co-authorship network (available <a href="http://#">HERE</a>).</p>
+
+<p>The purpose of this section is the use of Exponential Random Graph Modeling (ERGM) as a  Statistical modeling to better understand and explain our malaria co-authorship network.
+Loading the necessary packages&hellip;</p>
+
+<p>Loading the variables from the last section&hellip;</p>
+
+<pre><code class="r">load(&#39;./Rdata/mnet.rda&#39;)
+load(&#39;./Rdata/mnet2.rda&#39;)
+load(&#39;./Rdata/mnet2.gc.rda&#39;)
+load(&#39;./Rdata/auth_data.rda&#39;)
+load(&#39;./Rdata/edges.rda&#39;)
+load(&#39;./Rdata/mnet2.gc.rda&#39;)
+
+mnet3 &lt;- read_graph(&#39;./graphs/CAnet_graph.graphml&#39;, format = &#39;graphml&#39;)
+mnet.w &lt;- read_graph(&#39;./graphs/CAnet_weight.graphml&#39;, format = &#39;graphml&#39;)
+</code></pre>
+
+<p>Since this processing is going to take a lot of time, we decide to parallelize all the computations:</p>
+
+<pre><code class="r">cores=detectCores() # get number of cores
+# cl &lt;- makeCluster(cores[1]-2) #I decide to run leave 2 cores out
+# registerDoParallel(cl)
+</code></pre>
+
+<pre><code class="r">A &lt;- get.adjacency(mnet3)
+v.attrs &lt;- get.data.frame(mnet3, what=&quot;vertices&quot;)
+v.attrs$name &lt;- V(mnet.w)$name
+v.attrs$timesCited &lt;- V(mnet.w)$timesCited
+v.attrs$numPub &lt;- V(mnet.w)$numPub
+v.attrs$community &lt;- V(mnet2)$community
+v.attrs$degree &lt;- V(mnet2)$degree
+v.attrs$affiliation &lt;- V(mnet.w)$place
+v.attrs$city &lt;- V(mnet.w)$affil
+v.attrs$country &lt;- V(mnet.w)$country
+
+
+mnet3.simple &lt;- network::as.network(as.matrix(A), directed=FALSE)
+network::set.vertex.attribute(mnet3.simple, &quot;timesCited&quot;, V(mnet.w)$timesCited)
+network::set.vertex.attribute(mnet3.simple, &quot;numPub&quot;, V(mnet.w)$numPub)
+network::set.vertex.attribute(mnet3.simple, &quot;community&quot;, V(mnet2)$community)
+network::set.vertex.attribute(mnet3.simple, &quot;degree&quot;, V(mnet2)$degree)
+mnet3.simple
+</code></pre>
+
+<pre><code>##  Network attributes:
+##   vertices = 1792 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = FALSE 
+##   total edges= 95707 
+##     missing edges= 0 
+##     non-missing edges= 95707 
+## 
+##  Vertex attribute names: 
+##     community degree numPub timesCited vertex.names 
+## 
+##  Edge attribute names not shown
+</code></pre>
+
+<pre><code class="r">my.ergm.bern &lt;- formula(mnet3.simple ~ edges)
+my.ergm.bern
+</code></pre>
+
+<pre><code>## mnet3.simple ~ edges
+</code></pre>
+
+<pre><code class="r">mnet3.simple ~ edges
+</code></pre>
+
+<pre><code>## mnet3.simple ~ edges
+</code></pre>
+
+<pre><code class="r">summary.statistics(my.ergm.bern)
+</code></pre>
+
+<pre><code>## edges 
+## 95707
+</code></pre>
+
+<pre><code class="r">t0 &lt;- Sys.time()
+my.ergm.bern.fit &lt;- ergm(my.ergm.bern, iterations=100, 
+                         control=control.ergm(parallel=cores, parallel.type=&quot;PSOCK&quot;, MCMC.samplesize=100,
+                                              MCMC.interval=500, MCMLE.maxit = 100, MCMC.burnin = 20000, seed=25))
+</code></pre>
+
+<pre><code>## Evaluating log-likelihood at the estimate.
+</code></pre>
+
+<pre><code class="r">Sys.time() - t0
+</code></pre>
+
+<pre><code>## Time difference of 17.6684 secs
+</code></pre>
+
+<pre><code class="r"># save(my.ergm.bern.fit, file = &#39;./Rdata/my.ergm.bern.fit.rda&#39;)
+</code></pre>
+
+<pre><code class="r">anova.ergm(my.ergm.bern.fit)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mnet3.simple ~ edges
+##          Df Deviance Resid. Df Resid. Dev Pr(&gt;|Chisq|)    
+## NULL                   1604736          0                 
+## Model 1:  1  -725266   1604735     725266    &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+<pre><code class="r">summary(my.ergm.bern.fit)
+</code></pre>
+
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mnet3.simple ~ edges
+## 
+## Iterations:  6 out of 100 
+## 
+## Monte Carlo MLE Results:
+##        Estimate Std. Error MCMC % p-value    
+## edges -2.757930   0.003333      0  &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 2224636  on 1604736  degrees of freedom
+##  Residual Deviance:  725266  on 1604735  degrees of freedom
+##  
+## AIC: 725268    BIC: 725280    (Smaller is better.)
+</code></pre>
+
+<p>The coefficient of this model is 
+-2.7579302
+ and the model likelihood is 
+-3.6263303 &times; 10<sup>5</sup>
+The coefficient estimate tell us that if this network had been generated by 
+the posited model, then the probability corresponding to the log-odds of a tie should is 
+0.0596403
+. This probability also represents the
+fraction of possible edges that are realized. The amount of deviance explained by the model
+is represented by two standard measures of model fit based on the likelihood (AIC and BIC),
+and the MCMC standard error. Since this model exhibits dyadic independence,
+MCMC estimation is not necessary, and the MCMC standard error does not apply.
+From our section on the mathematical modeling of our network, we know that our network is not random.
+To explore alternative hypotheses about the structure that exists and the underlying processes 
+that generated our network, we rely on the strength of ERGM to model building.</p>
+
+<p>From previous analyses, we have shown that prolific authors in our network tend to collaborate more.
+We have also demonstrated a tendency towards collaboration within authors of the same clusters/communities.</p>
+
+<p>Therefore, a good model to begin with will be a model that proposes assortative mixing i.e a greater
+probability of authors collaborating with other authors of the same productivity 
+(number of publications, number of times cited, or research cluster/community). Furthermore, this model
+is convenient in that it exhibits dyadic independence. [Hunter et al. (2008b)].
+We assume a uniform tendency towards assortative mixing within each attribute class 
+(same tendency to collaborate for within cluster/community)
+We fit the model using the nodecov term (main effect of a continuous covariate), and the nodematch term
+(uniform homophily) for our categorical variable &ldquo;community&rdquo;.</p>
+
+<pre><code class="r">mnet3.ergm &lt;- formula(mnet3.simple ~ edges + nodecov(&quot;timesCited&quot;) + 
+                        nodecov(&quot;numPub&quot;) + nodematch(&quot;community&quot;))
+summary.statistics(mnet3.ergm)
+</code></pre>
+
+<pre><code>##               edges  nodecov.timesCited      nodecov.numPub 
+##               95707            33146116              495605 
+## nodematch.community 
+##               92011
+</code></pre>
+
+<pre><code class="r">t0 &lt;- Sys.time()
+mod1 &lt;- ergm(mnet3.ergm, iterations=100,
+                       control=control.ergm(parallel=cores, parallel.type=&quot;PSOCK&quot;, MCMC.samplesize=100,
+                                            MCMC.interval=500, MCMC.burnin = 20000, seed=25, MCMLE.maxit = 100))
+</code></pre>
+
+<pre><code>## Warning in ergm.mple(Clist, Clist.miss, m, MPLEtype = MPLEtype, init = init, : GLM model may be separable; restarting glm with zeros.
+
+## Warning in ergm.mple(Clist, Clist.miss, m, MPLEtype = MPLEtype, init = init, : GLM model may be separable; restarting glm with zeros.
+</code></pre>
+
+<pre><code>## Evaluating log-likelihood at the estimate.
+</code></pre>
+
+<pre><code class="r"># save(mod1, file = &#39;./Rdata/mod1.rda&#39;)
+Sys.time() - t0
+</code></pre>
+
+<pre><code>## Time difference of 6.881809 secs
+</code></pre>
+
+<pre><code class="r">summary(mod1)
+</code></pre>
+
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mnet3.simple ~ edges + nodecov(&quot;timesCited&quot;) + nodecov(&quot;numPub&quot;) + 
+##     nodematch(&quot;community&quot;)
+## 
+## Iterations:  9 out of 100 
+## 
+## Monte Carlo MLE Results:
+##                       Estimate Std. Error MCMC % p-value    
+## edges               -7.078e+00  1.917e-02      0  &lt;1e-04 ***
+## nodecov.timesCited   8.103e-03  2.497e-05      0  &lt;1e-04 ***
+## nodecov.numPub      -1.364e-01  6.851e-04      0  &lt;1e-04 ***
+## nodematch.community  5.258e+00  1.862e-02      0  &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 2224636  on 1604736  degrees of freedom
+##  Residual Deviance:  309019  on 1604732  degrees of freedom
+##  
+## AIC: 309027    BIC: 309076    (Smaller is better.)
+</code></pre>
+
+<p>The new model converges after </p>
+
+<p>iterations. We can see that all 4 terms are significant with a dramatic 
+improvement in model likelihood. Model likelihood = 
+-1.545096 &times; 10<sup>5</sup></p>
+
+<p>The log-odds of a collaboration that is completely heterogeneous is 
+-7.08
+, hence the completely heterogeneous probability of a two authors collaborating is 
+8.4279693 &times; 10<sup>-4</sup></p>
+
+<p>. The log-odds of a collaboration homogeneous between by communities is 
+5.26
+ and the homogeneous probability of two authors collaborating between the same community is 
+4.3666013 &times; 10<sup>-6</sup>
+.
+The log-odds of a collaboration that is homogeneous in all 4 attributes is 
+-1.947853
+ and the associated probability is 
+0.1247877</p>
+
+<p>Often times, it is typical to include the nodefactor term to capture interaction or second order effects
+of attributes.</p>
+
+<p>Let&#39;s run another model with this new term:</p>
+
+<pre><code class="r">mnet3.ergm2 &lt;- formula(mnet3.simple ~ edges + nodecov(&quot;timesCited&quot;) + 
+                        nodecov(&quot;numPub&quot;) + nodematch(&quot;community&quot;) + nodefactor(&quot;community&quot;))
+summary.statistics(mnet3.ergm2)
+</code></pre>
+
+<pre><code>##                   edges      nodecov.timesCited          nodecov.numPub 
+##                   95707                33146116                  495605 
+##     nodematch.community  nodefactor.community.2  nodefactor.community.3 
+##                   92011                   10495                   10173 
+##  nodefactor.community.4  nodefactor.community.5  nodefactor.community.6 
+##                    1018                     276                      90 
+##  nodefactor.community.7  nodefactor.community.8  nodefactor.community.9 
+##                      72                      56                      30 
+## nodefactor.community.10 nodefactor.community.11 nodefactor.community.12 
+##                      40                      20                      20 
+## nodefactor.community.13 nodefactor.community.14 nodefactor.community.15 
+##                      20                      20                      20 
+## nodefactor.community.16 nodefactor.community.17 nodefactor.community.18 
+##                       6                       6                       6 
+## nodefactor.community.19 nodefactor.community.20 nodefactor.community.21 
+##                       2                       2                     448 
+## nodefactor.community.22 nodefactor.community.23 
+##                   35729                     722
+</code></pre>
+
+<pre><code class="r">t0 &lt;- Sys.time()
+mod2 &lt;- ergm(mnet3.ergm2, iterations=100,
+                       control=control.ergm(parallel=cores, parallel.type=&quot;PSOCK&quot;, MCMC.samplesize=100,
+                                            MCMC.interval=500, MCMC.burnin = 20000, seed=25, MCMLE.maxit = 100))
+</code></pre>
+
+<pre><code>## Warning in ergm.mple(Clist, Clist.miss, m, MPLEtype = MPLEtype, init = init, : GLM model may be separable; restarting glm with zeros.
+
+## Warning in ergm.mple(Clist, Clist.miss, m, MPLEtype = MPLEtype, init = init, : GLM model may be separable; restarting glm with zeros.
+</code></pre>
+
+<pre><code>## Evaluating log-likelihood at the estimate.
+</code></pre>
+
+<pre><code class="r">#save(mod2, file = &#39;./Rdata/mod2.rda&#39;)
+Sys.time() - t0
+</code></pre>
+
+<pre><code>## Time difference of 14.01319 secs
+</code></pre>
+
+<pre><code class="r">summary(mod2)
+</code></pre>
+
+<pre><code>## 
+## ==========================
+## Summary of model fit
+## ==========================
+## 
+## Formula:   mnet3.simple ~ edges + nodecov(&quot;timesCited&quot;) + nodecov(&quot;numPub&quot;) + 
+##     nodematch(&quot;community&quot;) + nodefactor(&quot;community&quot;)
+## 
+## Iterations:  10 out of 100 
+## 
+## Monte Carlo MLE Results:
+##                           Estimate Std. Error MCMC % p-value    
+## edges                   -2.102e+00  3.290e-02      0  &lt;1e-04 ***
+## nodecov.timesCited      -1.517e-03  5.709e-05      0  &lt;1e-04 ***
+## nodecov.numPub           7.802e-02  9.651e-04      0  &lt;1e-04 ***
+## nodematch.community      6.546e+00  2.273e-02      0  &lt;1e-04 ***
+## nodefactor.community.2  -4.210e+00  1.919e-02      0  &lt;1e-04 ***
+## nodefactor.community.3  -4.041e+00  2.171e-02      0  &lt;1e-04 ***
+## nodefactor.community.4  -2.840e+00  3.217e-02      0  &lt;1e-04 ***
+## nodefactor.community.5  -2.708e+00  5.613e-02      0  &lt;1e-04 ***
+## nodefactor.community.6  -2.254e+00  1.059e-01      0  &lt;1e-04 ***
+## nodefactor.community.7  -2.400e+00  1.169e-01      0  &lt;1e-04 ***
+## nodefactor.community.8  -2.491e+00  1.307e-01      0  &lt;1e-04 ***
+## nodefactor.community.9  -2.662e+00  1.744e-01      0  &lt;1e-04 ***
+## nodefactor.community.10 -2.945e+00  1.446e-01      0  &lt;1e-04 ***
+## nodefactor.community.11 -2.829e+00  2.124e-01      0  &lt;1e-04 ***
+## nodefactor.community.12 -2.810e+00  2.123e-01      0  &lt;1e-04 ***
+## nodefactor.community.13 -2.816e+00  2.124e-01      0  &lt;1e-04 ***
+## nodefactor.community.14 -2.829e+00  2.124e-01      0  &lt;1e-04 ***
+## nodefactor.community.15 -2.831e+00  2.124e-01      0  &lt;1e-04 ***
+## nodefactor.community.16 -3.338e+00  3.932e-01      0  &lt;1e-04 ***
+## nodefactor.community.17 -3.335e+00  3.932e-01      0  &lt;1e-04 ***
+## nodefactor.community.18 -3.347e+00  3.932e-01      0  &lt;1e-04 ***
+## nodefactor.community.19 -3.949e+00  6.970e-01      0  &lt;1e-04 ***
+## nodefactor.community.20 -3.949e+00  6.970e-01      0  &lt;1e-04 ***
+## nodefactor.community.21 -2.103e+00  5.471e-02      0  &lt;1e-04 ***
+## nodefactor.community.22 -1.632e+00  2.107e-02      0  &lt;1e-04 ***
+## nodefactor.community.23 -2.012e+00  4.412e-02      0  &lt;1e-04 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+##      Null Deviance: 2224636  on 1604736  degrees of freedom
+##  Residual Deviance:  146929  on 1604710  degrees of freedom
+##  
+## AIC: 146981    BIC: 147301    (Smaller is better.)
+</code></pre>
+
+<p>The new model converges after </p>
+
+<p>iterations. We can see that all terms are significant a 
+model likelihood of 
+-7.3464642 &times; 10<sup>4</sup>
+.
+Let&#39;s see what this model does and does not capture about the structure in our original data.
+To do this, we use the model fit that we have just generated to simulate new networks at random,
+and consider how these are similar to or different from our data</p>
+
+<pre><code class="r">sim1 &lt;- simulate(mod2, 
+                 # burnin = 1e+6, # we may set the number of steps in the simulation chain to 1e+06
+                 verbose = TRUE, seed = 25)
+</code></pre>
+
+<pre><code>## Starting MCMC iterations to generate 1 network
+## Sampler accepted  12.005% of 20000 proposed steps.
+## Sample size = 1 by 1 
+## Finished simulation 1 of 1.
+</code></pre>
+
+<p>Let&#39;s examine the mixing matrix for the attribute community</p>
+
+<pre><code class="r">library(caret)
+</code></pre>
+
+<pre><code>## Loading required package: lattice
+</code></pre>
+
+<pre><code>## Loading required package: ggplot2
+</code></pre>
+
+<pre><code class="r">M &lt;- mixingmatrix(sim1, &quot;community&quot;)
+confusionMatrix(M$matrix)
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##     To
+## From     1     2     3     4     5     6     7     8     9    10    11
+##   1  65694    59    35    10     8     3     5     4     0     1     2
+##   2     59  4727   402     0     0     0     0     0     1     0     0
+##   3     35   402  3950    38     0     1     0     0     0     0     0
+##   4     10     0    38   489     0     0     0     0     0     0     0
+##   5      8     0     0     0   137     0     0     0     0     0     0
+##   6      3     0     1     0     0    45     0     0     0     0     0
+##   7      5     0     0     0     0     0    36     0     0     0     0
+##   8      4     0     0     0     0     0     0    28     0     0     0
+##   9      0     1     0     0     0     0     0     0    15     0     0
+##   10     1     0     0     0     0     0     0     0     0    20     0
+##   11     2     0     0     0     0     0     0     0     0     0    10
+##   12     2     1     0     0     0     0     0     0     0     0     0
+##   13     2     0     0     0     0     0     0     0     0     0     0
+##   14     2     0     0     1     0     0     0     0     0     0     0
+##   15     0     0     0     0     0     0     0     0     0     0     0
+##   16     0     0     0     0     0     0     0     0     0     0     0
+##   17     1     0     0     0     0     0     0     0     0     0     0
+##   18     0     0     0     0     0     0     0     0     0     0     0
+##   19     0     0     0     0     0     0     0     0     0     0     0
+##   20     0     0     0     0     0     0     0     0     0     0     0
+##   21    12     0     2     0     0     0     0     0     0     0     0
+##   22   830   511  1638     4     1     0     0     0     0     0     1
+##   23    10    13    27     1     0     0     0     0     0     0     0
+##     To
+## From    12    13    14    15    16    17    18    19    20    21    22
+##   1      2     2     2     0     0     1     0     0     0    12   830
+##   2      1     0     0     0     0     0     0     0     0     0   511
+##   3      0     0     0     0     0     0     0     0     0     2  1638
+##   4      0     0     1     0     0     0     0     0     0     0     4
+##   5      0     0     0     0     0     0     0     0     0     0     1
+##   6      0     0     0     0     0     0     0     0     0     0     0
+##   7      0     0     0     0     0     0     0     0     0     0     0
+##   8      0     0     0     0     0     0     0     0     0     0     0
+##   9      0     0     0     0     0     0     0     0     0     0     0
+##   10     0     0     0     0     0     0     0     0     0     0     0
+##   11     0     0     0     0     0     0     0     0     0     0     1
+##   12    10     0     0     0     0     0     0     0     0     0     0
+##   13     0    10     0     0     0     0     0     0     0     0     0
+##   14     0     0    10     0     0     0     0     0     0     0     0
+##   15     0     0     0    10     0     0     0     0     0     0     0
+##   16     0     0     0     0     3     0     0     0     0     0     0
+##   17     0     0     0     0     0     3     0     0     0     0     0
+##   18     0     0     0     0     0     0     3     0     0     0     0
+##   19     0     0     0     0     0     0     0     1     0     0     0
+##   20     0     0     0     0     0     0     0     0     1     0     0
+##   21     0     0     0     0     0     0     0     0     0   183    74
+##   22     0     0     0     0     0     0     0     0     0    74 16286
+##   23     0     0     0     0     0     0     0     0     0     0     3
+##     To
+## From    23
+##   1     10
+##   2     13
+##   3     27
+##   4      1
+##   5      0
+##   6      0
+##   7      0
+##   8      0
+##   9      0
+##   10     0
+##   11     0
+##   12     0
+##   13     0
+##   14     0
+##   15     0
+##   16     0
+##   17     0
+##   18     0
+##   19     0
+##   20     0
+##   21     0
+##   22     3
+##   23   340
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.9255          
+##                  95% CI : (0.9238, 0.9271)
+##     No Information Rate : 0.6707          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.8525          
+##  Mcnemar&#39;s Test P-Value : NA              
+## 
+## Statistics by Class:
+## 
+##                      Class: 1 Class: 2 Class: 3 Class: 4 Class: 5
+## Sensitivity            0.9852  0.82727  0.64828 0.900552 0.938356
+## Specificity            0.9699  0.98947  0.97704 0.999454 0.999909
+## Pos Pred Value         0.9852  0.82727  0.64828 0.900552 0.938356
+## Neg Pred Value         0.9699  0.98947  0.97704 0.999454 0.999909
+## Prevalence             0.6707  0.05747  0.06128 0.005462 0.001469
+## Detection Rate         0.6608  0.04755  0.03973 0.004918 0.001378
+## Detection Prevalence   0.6707  0.05747  0.06128 0.005462 0.001469
+## Balanced Accuracy      0.9775  0.90837  0.81266 0.950003 0.969133
+##                       Class: 6  Class: 7  Class: 8  Class: 9 Class: 10
+## Sensitivity          0.9183673 0.8780488 0.8750000 0.9375000 0.9523810
+## Specificity          0.9999597 0.9999497 0.9999598 0.9999899 0.9999899
+## Pos Pred Value       0.9183673 0.8780488 0.8750000 0.9375000 0.9523810
+## Neg Pred Value       0.9999597 0.9999497 0.9999598 0.9999899 0.9999899
+## Prevalence           0.0004929 0.0004124 0.0003219 0.0001609 0.0002112
+## Detection Rate       0.0004526 0.0003621 0.0002816 0.0001509 0.0002012
+## Detection Prevalence 0.0004929 0.0004124 0.0003219 0.0001609 0.0002112
+## Balanced Accuracy    0.9591635 0.9389992 0.9374799 0.9687450 0.9761854
+##                      Class: 11 Class: 12 Class: 13 Class: 14 Class: 15
+## Sensitivity          0.7692308 0.7692308 0.8333333 0.7692308 1.0000000
+## Specificity          0.9999698 0.9999698 0.9999799 0.9999698 1.0000000
+## Pos Pred Value       0.7692308 0.7692308 0.8333333 0.7692308 1.0000000
+## Neg Pred Value       0.9999698 0.9999698 0.9999799 0.9999698 1.0000000
+## Prevalence           0.0001308 0.0001308 0.0001207 0.0001308 0.0001006
+## Detection Rate       0.0001006 0.0001006 0.0001006 0.0001006 0.0001006
+## Detection Prevalence 0.0001308 0.0001308 0.0001207 0.0001308 0.0001006
+## Balanced Accuracy    0.8846003 0.8846003 0.9166566 0.8846003 1.0000000
+##                      Class: 16 Class: 17 Class: 18 Class: 19 Class: 20
+## Sensitivity          1.000e+00 7.500e-01 1.000e+00 1.000e+00 1.000e+00
+## Specificity          1.000e+00 1.000e+00 1.000e+00 1.000e+00 1.000e+00
+## Pos Pred Value       1.000e+00 7.500e-01 1.000e+00 1.000e+00 1.000e+00
+## Neg Pred Value       1.000e+00 1.000e+00 1.000e+00 1.000e+00 1.000e+00
+## Prevalence           3.017e-05 4.023e-05 3.017e-05 1.006e-05 1.006e-05
+## Detection Rate       3.017e-05 3.017e-05 3.017e-05 1.006e-05 1.006e-05
+## Detection Prevalence 3.017e-05 4.023e-05 3.017e-05 1.006e-05 1.006e-05
+## Balanced Accuracy    1.000e+00 8.750e-01 1.000e+00 1.000e+00 1.000e+00
+##                      Class: 21 Class: 22 Class: 23
+## Sensitivity           0.675277    0.8417  0.862944
+## Specificity           0.999112    0.9618  0.999455
+## Pos Pred Value        0.675277    0.8417  0.862944
+## Neg Pred Value        0.999112    0.9618  0.999455
+## Prevalence            0.002726    0.1946  0.003963
+## Detection Rate        0.001841    0.1638  0.003420
+## Detection Prevalence  0.002726    0.1946  0.003963
+## Balanced Accuracy     0.837195    0.9018  0.931199
+</code></pre>
+
+<p>Identifying Model degeneracy
+We first fit a triangle model</p>
+
+<pre><code class="r">t0 &lt;- Sys.time()
+mod3 &lt;- ergm(mnet3.simple ~ edges + triangle, maxit=100, verbose = TRUE,
+             control = control.ergm(MCMLE.maxit=100, MCMC.samplesize = 1000, MCMC.interval = 1000, seed=25))
+</code></pre>
+
+<pre><code>## Evaluating network in model
+## Initializing Metropolis-Hastings proposal(s): ergm:MH_TNT
+## Initializing model.
+## Using initial method &#39;MPLE&#39;.
+## Fitting initial model.
+## MPLE covariate matrix has 236 rows.
+## Fitting ERGM.
+## Starting maximum likelihood estimation via MCMLE:
+## Density guard set to 1922326 from an initial count of 95707  edges.
+## Iteration 1 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.10599782  0.06176146 
+## Sampler accepted  11.255% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   -704.171 -10644.120 
+## Average estimating equation values:
+##      edges   triangle 
+##   -704.171 -10644.120 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.797856, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.655364, low=0.000000, high=0.797856, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.734155, low=0.655364, high=0.797856, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.767319, low=0.734155, high=0.797856, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.751117, low=0.734155, high=0.767319, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.742739, low=0.734155, high=0.751117, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.746953, low=0.742739, high=0.751117, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.749041, low=0.746953, high=0.751117, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.747998, low=0.746953, high=0.749041, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.748520, low=0.747998, high=0.749041, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.748259, low=0.747998, high=0.748520, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.748259214993469  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 4.09 
+## Iteration 2 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.08852237  0.06163241 
+## Sampler accepted  11.416% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##    81.222 65302.863 
+## Average estimating equation values:
+##     edges  triangle 
+##    81.222 65302.863 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.674433, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.500626, low=0.000000, high=0.674433, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.372908, low=0.000000, high=0.500626, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.271144, low=0.000000, high=0.372908, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.188769, low=0.000000, high=0.271144, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.234774, low=0.188769, high=0.271144, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.213341, low=0.188769, high=0.234774, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.201514, low=0.188769, high=0.213341, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.207533, low=0.201514, high=0.213341, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.204551, low=0.201514, high=0.207533, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 11, est=0.206048, low=0.204551, high=0.207533, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 12, est=0.206792, low=0.206048, high=0.207533, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 13, est=0.207163, low=0.206792, high=0.207533, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.207162812436252  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.458 
+## Iteration 3 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.07079948  0.06139483 
+## Sampler accepted  11.486% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##    738.492 141088.861 
+## Average estimating equation values:
+##      edges   triangle 
+##    738.492 141088.861 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.299128, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.156286, low=0.000000, high=0.299128, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.227133, low=0.156286, high=0.299128, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.191817, low=0.156286, high=0.227133, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.174110, low=0.156286, high=0.191817, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.165217, low=0.156286, high=0.174110, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.169667, low=0.165217, high=0.174110, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.167443, low=0.165217, high=0.169667, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.168555, low=0.167443, high=0.169667, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.167999, low=0.167443, high=0.168555, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 11, est=0.168277, low=0.167999, high=0.168555, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.168277397288564  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.093 
+## Iteration 4 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05795581  0.06123552 
+## Sampler accepted  11.554% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1315.282 205804.535 
+## Average estimating equation values:
+##      edges   triangle 
+##   1315.282 205804.535 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.277678, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.141828, low=0.000000, high=0.277678, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.073594, low=0.000000, high=0.141828, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.108101, low=0.073594, high=0.141828, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.090976, low=0.073594, high=0.108101, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.082321, low=0.073594, high=0.090976, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.086657, low=0.082321, high=0.090976, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.088818, low=0.086657, high=0.090976, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.087738, low=0.086657, high=0.088818, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.087197, low=0.086657, high=0.087738, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.086927, low=0.086657, high=0.087197, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0869270548989574  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.8362 
+## Iteration 5 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05130272  0.06109951 
+## Sampler accepted  11.643% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1802.005 261097.977 
+## Average estimating equation values:
+##      edges   triangle 
+##   1802.005 261097.977 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.237740, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.116459, low=0.000000, high=0.237740, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.058765, low=0.000000, high=0.116459, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.087609, low=0.058765, high=0.116459, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.102017, low=0.087609, high=0.116459, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.094810, low=0.087609, high=0.102017, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.098413, low=0.094810, high=0.102017, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.096611, low=0.094810, high=0.098413, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.097512, low=0.096611, high=0.098413, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.097062, low=0.096611, high=0.097512, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0970616869971631  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.079 
+## Iteration 6 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.06689886  0.06104307 
+## Sampler accepted  11.419% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1932.299 305388.626 
+## Average estimating equation values:
+##      edges   triangle 
+##   1932.299 305388.626 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.242356, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.119289, low=0.000000, high=0.242356, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.060377, low=0.000000, high=0.119289, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.030526, low=0.000000, high=0.060377, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.045515, low=0.030526, high=0.060377, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.052959, low=0.045515, high=0.060377, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.049241, low=0.045515, high=0.052959, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.047379, low=0.045515, high=0.049241, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.048310, low=0.047379, high=0.049241, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.048776, low=0.048310, high=0.049241, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0487756426464766  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.484 
+## Iteration 7 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.08031025  0.06092871 
+## Sampler accepted  11.238% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1938.15 339223.32 
+## Average estimating equation values:
+##     edges  triangle 
+##   1938.15 339223.32 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.221255, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.106566, low=0.000000, high=0.221255, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.053212, low=0.000000, high=0.106566, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.026693, low=0.000000, high=0.053212, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.039961, low=0.026693, high=0.053212, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.033331, low=0.026693, high=0.039961, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.036647, low=0.033331, high=0.039961, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.038304, low=0.036647, high=0.039961, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.039133, low=0.038304, high=0.039961, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.038719, low=0.038304, high=0.039133, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0387185301920332  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.611 
+## Iteration 8 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.07126720  0.06063177 
+## Sampler accepted  11.244% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2033.236 363197.347 
+## Average estimating equation values:
+##      edges   triangle 
+##   2033.236 363197.347 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.217138, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.104146, low=0.000000, high=0.217138, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.051873, low=0.000000, high=0.104146, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025984, low=0.000000, high=0.051873, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.038929, low=0.025984, high=0.051873, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.032458, low=0.025984, high=0.038929, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.029222, low=0.025984, high=0.032458, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.027603, low=0.025984, high=0.029222, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.026794, low=0.025984, high=0.027603, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.027199, low=0.026794, high=0.027603, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0271985906456982  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.33 
+## Iteration 9 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.06829113  0.06034581 
+## Sampler accepted  11.338% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2264.693 380974.324 
+## Average estimating equation values:
+##      edges   triangle 
+##   2264.693 380974.324 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.212537, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.101466, low=0.000000, high=0.212537, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050399, low=0.000000, high=0.101466, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025207, low=0.000000, high=0.050399, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012616, low=0.000000, high=0.025207, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006313, low=0.000000, high=0.012616, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009465, low=0.006313, high=0.012616, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.011041, low=0.009465, high=0.012616, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.011829, low=0.011041, high=0.012616, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.012222, low=0.011829, high=0.012616, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0122224240679174  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.444 
+## Iteration 10 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05330227  0.05963666 
+## Sampler accepted  11.528% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2503.913 393519.054 
+## Average estimating equation values:
+##      edges   triangle 
+##   2503.913 393519.054 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.206734, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.098123, low=0.000000, high=0.206734, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048572, low=0.000000, high=0.098123, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024247, low=0.000000, high=0.048572, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012123, low=0.000000, high=0.024247, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006063, low=0.000000, high=0.012123, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009093, low=0.006063, high=0.012123, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.010608, low=0.009093, high=0.012123, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.011366, low=0.010608, high=0.012123, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.011745, low=0.011366, high=0.012123, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0117446314619661  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.9147 
+## Iteration 11 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05411037  0.05924596 
+## Sampler accepted  11.466% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2608.031 402710.886 
+## Average estimating equation values:
+##      edges   triangle 
+##   2608.031 402710.886 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.206552, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.098019, low=0.000000, high=0.206552, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048515, low=0.000000, high=0.098019, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024217, low=0.000000, high=0.048515, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012108, low=0.000000, high=0.024217, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006055, low=0.000000, high=0.012108, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.003028, low=0.000000, high=0.006055, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.004542, low=0.003028, high=0.006055, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.005299, low=0.004542, high=0.006055, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.004920, low=0.004542, high=0.005299, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00492012718176485  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.9645 
+## Iteration 12 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05057310  0.05824948 
+## Sampler accepted  11.384% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2466.736 407399.065 
+## Average estimating equation values:
+##      edges   triangle 
+##   2466.736 407399.065 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.203976, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096548, low=0.000000, high=0.203976, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047716, low=0.000000, high=0.096548, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023798, low=0.000000, high=0.047716, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011894, low=0.000000, high=0.023798, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005947, low=0.000000, high=0.011894, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.008920, low=0.005947, high=0.011894, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.007433, low=0.005947, high=0.008920, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.006690, low=0.005947, high=0.007433, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.006318, low=0.005947, high=0.006690, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00631831462984863  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.499 
+## Iteration 13 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.04652226  0.05706064 
+## Sampler accepted  11.464% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2678.397 411789.372 
+## Average estimating equation values:
+##      edges   triangle 
+##   2678.397 411789.372 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.204500, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096847, low=0.000000, high=0.204500, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047879, low=0.000000, high=0.096847, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023883, low=0.000000, high=0.047879, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011937, low=0.000000, high=0.023883, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005969, low=0.000000, high=0.011937, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002984, low=0.000000, high=0.005969, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.004477, low=0.002984, high=0.005969, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.003731, low=0.002984, high=0.004477, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.004104, low=0.003731, high=0.004477, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00410357734377088  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 4.187 
+## Iteration 14 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.02802134  0.05198526 
+## Sampler accepted  11.602% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2651.024 409531.999 
+## Average estimating equation values:
+##      edges   triangle 
+##   2651.024 409531.999 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.203671, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096374, low=0.000000, high=0.203671, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047622, low=0.000000, high=0.096374, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023749, low=0.000000, high=0.047622, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011868, low=0.000000, high=0.023749, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005934, low=0.000000, high=0.011868, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002967, low=0.000000, high=0.005934, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001484, low=0.000000, high=0.002967, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.002225, low=0.001484, high=0.002967, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.002596, low=0.002225, high=0.002967, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00259612911806878  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.439 
+## Iteration 15 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.03206328  0.04930413 
+## Sampler accepted  11.504% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2594.875 407881.266 
+## Average estimating equation values:
+##      edges   triangle 
+##   2594.875 407881.266 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.203108, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096054, low=0.000000, high=0.203108, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047449, low=0.000000, high=0.096054, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023658, low=0.000000, high=0.047449, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011822, low=0.000000, high=0.023658, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005910, low=0.000000, high=0.011822, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002955, low=0.000000, high=0.005910, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001478, low=0.000000, high=0.002955, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.002216, low=0.001478, high=0.002955, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.002586, low=0.002216, high=0.002955, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00258577707955193  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.428 
+## Iteration 16 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0311270  0.0446938 
+## Sampler accepted  11.430% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2445.445 400168.416 
+## Average estimating equation values:
+##      edges   triangle 
+##   2445.445 400168.416 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.203104, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096052, low=0.000000, high=0.203104, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047448, low=0.000000, high=0.096052, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023658, low=0.000000, high=0.047448, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011822, low=0.000000, high=0.023658, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005910, low=0.000000, high=0.011822, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.008866, low=0.005910, high=0.011822, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.010344, low=0.008866, high=0.011822, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.009605, low=0.008866, high=0.010344, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.009235, low=0.008866, high=0.009605, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00923512710592837  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.172 
+## Iteration 17 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.01680491  0.04397202 
+## Sampler accepted  11.486% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2390.891 387441.688 
+## Average estimating equation values:
+##      edges   triangle 
+##   2390.891 387441.688 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.205600, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097474, low=0.000000, high=0.205600, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048219, low=0.000000, high=0.097474, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024062, low=0.000000, high=0.048219, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012029, low=0.000000, high=0.024062, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018043, low=0.012029, high=0.024062, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.015036, low=0.012029, high=0.018043, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.016539, low=0.015036, high=0.018043, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.015788, low=0.015036, high=0.016539, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.015412, low=0.015036, high=0.015788, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0154116353747659  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 3.723 
+## Iteration 18 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05199253  0.04294224 
+## Sampler accepted  11.188% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1995.735 367526.163 
+## Average estimating equation values:
+##      edges   triangle 
+##   1995.735 367526.163 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.207953, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.098822, low=0.000000, high=0.207953, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048953, low=0.000000, high=0.098822, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024446, low=0.000000, high=0.048953, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012226, low=0.000000, high=0.024446, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006115, low=0.000000, high=0.012226, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009171, low=0.006115, high=0.012226, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.010698, low=0.009171, high=0.012226, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.011462, low=0.010698, high=0.012226, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.011080, low=0.010698, high=0.011462, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0110801933942621  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.452 
+## Iteration 19 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.00794339  0.04149859 
+## Sampler accepted  11.618% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2292.175 348639.700 
+## Average estimating equation values:
+##      edges   triangle 
+##   2292.175 348639.700 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.206299, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097874, low=0.000000, high=0.206299, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048437, low=0.000000, high=0.097874, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024176, low=0.000000, high=0.048437, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012087, low=0.000000, high=0.024176, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018130, low=0.012087, high=0.024176, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021152, low=0.018130, high=0.024176, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.019641, low=0.018130, high=0.021152, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.020397, low=0.019641, high=0.021152, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.020019, low=0.019641, high=0.020397, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0200187782992078  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.823 
+## Iteration 20 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.02402222  0.04079535 
+## Sampler accepted  11.534% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2112.977 320812.861 
+## Average estimating equation values:
+##      edges   triangle 
+##   2112.977 320812.861 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.209730, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.099844, low=0.000000, high=0.209730, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049511, low=0.000000, high=0.099844, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.074486, low=0.049511, high=0.099844, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.061962, low=0.049511, high=0.074486, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.055729, low=0.049511, high=0.061962, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.058843, low=0.055729, high=0.061962, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.057285, low=0.055729, high=0.058843, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.058064, low=0.057285, high=0.058843, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.058454, low=0.058064, high=0.058843, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0584536446336847  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.587 
+## Iteration 21 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.02491819  0.04063196 
+## Sampler accepted  11.536% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1790.846 280251.978 
+## Average estimating equation values:
+##      edges   triangle 
+##   1790.846 280251.978 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.225306, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.108966, low=0.000000, high=0.225306, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.054548, low=0.000000, high=0.108966, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.081661, low=0.054548, high=0.108966, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.068095, low=0.054548, high=0.081661, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.061321, low=0.054548, high=0.068095, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.057934, low=0.054548, high=0.061321, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.059627, low=0.057934, high=0.061321, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.058781, low=0.057934, high=0.059627, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.059204, low=0.058781, high=0.059627, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0592040778729485  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.24 
+## Iteration 22 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0250226  0.0404832 
+## Sampler accepted  11.565% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1612.801 242148.243 
+## Average estimating equation values:
+##      edges   triangle 
+##   1612.801 242148.243 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.225624, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.109155, low=0.000000, high=0.225624, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.054653, low=0.000000, high=0.109155, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.081811, low=0.054653, high=0.109155, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.068223, low=0.054653, high=0.081811, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.075013, low=0.068223, high=0.081811, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.071617, low=0.068223, high=0.075013, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.069920, low=0.068223, high=0.071617, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.070768, low=0.069920, high=0.071617, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.071193, low=0.070768, high=0.071617, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0711926389083289  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.17 
+## Iteration 23 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.00470562  0.04009618 
+## Sampler accepted  11.755% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   1531.819 198071.613 
+## Average estimating equation values:
+##      edges   triangle 
+##   1531.819 198071.613 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.230773, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.112237, low=0.000000, high=0.230773, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.056380, low=0.000000, high=0.112237, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.084252, low=0.056380, high=0.112237, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.070317, low=0.056380, high=0.084252, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.077283, low=0.070317, high=0.084252, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.073800, low=0.070317, high=0.077283, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.075541, low=0.073800, high=0.077283, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.076412, low=0.075541, high=0.077283, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.076847, low=0.076412, high=0.077283, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0768472076892774  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.426 
+## Iteration 24 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.03850363  0.04003885 
+## Sampler accepted  11.485% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##    905.809 140425.323 
+## Average estimating equation values:
+##      edges   triangle 
+##    905.809 140425.323 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.233249, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.113731, low=0.000000, high=0.233249, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.171593, low=0.113731, high=0.233249, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.201760, low=0.171593, high=0.233249, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.217311, low=0.201760, high=0.233249, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.209491, low=0.201760, high=0.217311, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.205615, low=0.201760, high=0.209491, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.207550, low=0.205615, high=0.209491, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.206582, low=0.205615, high=0.207550, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.207066, low=0.206582, high=0.207550, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.207065667780397  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.732 
+## Iteration 25 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0285674  0.0398556 
+## Sampler accepted  11.673% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   535.598 59888.892 
+## Average estimating equation values:
+##     edges  triangle 
+##   535.598 59888.892 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.299073, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 2, est=0.468425, low=0.299073, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.595035, low=0.468425, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.697532, low=0.595035, high=1.000000, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.639986, low=0.595035, high=0.697532, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.666648, low=0.639986, high=0.697532, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.652877, low=0.639986, high=0.666648, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.646330, low=0.639986, high=0.652877, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.649577, low=0.646330, high=0.652877, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.651220, low=0.649577, high=0.652877, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.650397, low=0.649577, high=0.651220, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 12, est=0.649986, low=0.649577, high=0.650397, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.649986308085725  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.589 
+## Iteration 26 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.04634852  0.03993298 
+## Sampler accepted  11.684% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   -433.748 -54383.131 
+## Average estimating equation values:
+##      edges   triangle 
+##   -433.748 -54383.131 
+## is.inCH: iter= 1, inside hull.
+## iter= 1, est=1.000000, low=1.000000, high=1.000000, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  1  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.9096 
+## Step length converged once. Increasing MCMC sample size.
+## Iteration 27 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.03832056  0.03990241 
+## Sampler accepted  13.991% of 4000000 proposed steps.
+## Sample size = 4000 by 4000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -14622.12 -864587.04 
+## Average estimating equation values:
+##      edges   triangle 
+##  -14622.12 -864587.04 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.797856, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.655364, low=0.000000, high=0.797856, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.540677, low=0.000000, high=0.655364, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.442886, low=0.000000, high=0.540677, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.356981, low=0.000000, high=0.442886, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.280499, low=0.000000, high=0.356981, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.324178, low=0.280499, high=0.356981, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.341562, low=0.324178, high=0.356981, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.349486, low=0.341562, high=0.356981, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.345581, low=0.341562, high=0.349486, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.343586, low=0.341562, high=0.345581, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 12, est=0.344587, low=0.343586, high=0.345581, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 13, est=0.345085, low=0.344587, high=0.345581, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.345085151799789  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## Starting MCMC s.e. computation.
+## The log-likelihood improved by 1.077 
+## Iteration 28 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.03905771  0.03992209 
+## Sampler accepted  14.085% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -19011.17 -1032685.24 
+## Average estimating equation values:
+##       edges    triangle 
+##   -19011.17 -1032685.24 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.386765, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.221454, low=0.000000, high=0.386765, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.125965, low=0.000000, high=0.221454, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.069093, low=0.000000, high=0.125965, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.036594, low=0.000000, high=0.069093, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.018904, low=0.000000, high=0.036594, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.009618, low=0.000000, high=0.018904, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.004853, low=0.000000, high=0.009618, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.002438, low=0.000000, high=0.004853, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.001222, low=0.000000, high=0.002438, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.000612, low=0.000000, high=0.001222, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 12, est=0.000306, low=0.000000, high=0.000612, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000305950739770078  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.5919 
+## Iteration 29 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.04311492  0.04374331 
+## Sampler accepted  14.065% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18994.18 -1032018.56 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18994.18 -1032018.56 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202258, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095571, low=0.000000, high=0.202258, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047187, low=0.000000, high=0.095571, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023522, low=0.000000, high=0.047187, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011752, low=0.000000, high=0.023522, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005875, low=0.000000, high=0.011752, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002937, low=0.000000, high=0.005875, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002937, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367164466212384  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 3.983 
+## Iteration 30 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.05178228  0.06492833 
+## Sampler accepted  14.272% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18841.61 -1031033.93 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18841.61 -1031033.93 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224051439996  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.536 
+## Iteration 31 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0641387  0.0679857 
+## Sampler accepted  14.190% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18775.77 -1030261.12 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18775.77 -1030261.12 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00036722410944744  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.231 
+## Iteration 32 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0858658  0.0801775 
+## Sampler accepted  14.096% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18923.05 -1030107.14 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18923.05 -1030107.14 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503878  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.7516 
+## Iteration 33 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.08911159  0.08421094 
+## Sampler accepted  14.096% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18960.94 -1029898.34 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18960.94 -1029898.34 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503878  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.301 
+## Iteration 34 of at most 100 with parameter: 
+##       edges    triangle 
+## -5.09403965  0.09117931 
+## Sampler accepted  14.313% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18711.65 -1029234.04 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18711.65 -1029234.04 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503878  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.947 
+## Iteration 35 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1214103  0.1019788 
+## Sampler accepted  14.294% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18673.76 -1028116.05 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18673.76 -1028116.05 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.002203, low=0.001469, high=0.002938, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.001836, low=0.001469, high=0.002203, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0018361260499506  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.394 
+## Iteration 36 of at most 100 with parameter: 
+##     edges  triangle 
+## -5.119964  0.104489 
+## Sampler accepted  14.330% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -18611.46 -1019658.09 
+## Average estimating equation values:
+##       edges    triangle 
+##   -18611.46 -1019658.09 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202826, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095894, low=0.000000, high=0.202826, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047362, low=0.000000, high=0.095894, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023613, low=0.000000, high=0.047362, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011799, low=0.000000, high=0.023613, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005899, low=0.000000, high=0.011799, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.008848, low=0.005899, high=0.011799, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.007373, low=0.005899, high=0.008848, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.008111, low=0.007373, high=0.008848, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.007742, low=0.007373, high=0.008111, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00774210314431141  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.733 
+## Iteration 37 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1124385  0.1047906 
+## Sampler accepted  14.460% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -18297.29 -999589.41 
+## Average estimating equation values:
+##      edges   triangle 
+##  -18297.29 -999589.41 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.205036, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097152, low=0.000000, high=0.205036, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048044, low=0.000000, high=0.097152, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023970, low=0.000000, high=0.048044, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011982, low=0.000000, high=0.023970, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005991, low=0.000000, high=0.011982, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.008986, low=0.005991, high=0.011982, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.010484, low=0.008986, high=0.011982, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.009735, low=0.008986, high=0.010484, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.010110, low=0.009735, high=0.010484, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0101095779916701  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.763 
+## Iteration 38 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1343988  0.1055415 
+## Sampler accepted  14.090% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -18337.51 -975060.87 
+## Average estimating equation values:
+##      edges   triangle 
+##  -18337.51 -975060.87 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.205931, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097664, low=0.000000, high=0.205931, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048322, low=0.000000, high=0.097664, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024116, low=0.000000, high=0.048322, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012056, low=0.000000, high=0.024116, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006029, low=0.000000, high=0.012056, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009043, low=0.006029, high=0.012056, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.007536, low=0.006029, high=0.009043, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.006782, low=0.006029, high=0.007536, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.007159, low=0.006782, high=0.007536, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00715911176151695  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 3.364 
+## Iteration 39 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1131453  0.1061056 
+## Sampler accepted  14.374% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -17827.22 -943230.41 
+## Average estimating equation values:
+##      edges   triangle 
+##  -17827.22 -943230.41 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.204817, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097027, low=0.000000, high=0.204817, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047976, low=0.000000, high=0.097027, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023934, low=0.000000, high=0.047976, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011963, low=0.000000, high=0.023934, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.017947, low=0.011963, high=0.023934, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.014955, low=0.011963, high=0.017947, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.016451, low=0.014955, high=0.017947, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.017199, low=0.016451, high=0.017947, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.017573, low=0.017199, high=0.017947, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0175727482479347  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.103 
+## Iteration 40 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1037684  0.1060615 
+## Sampler accepted  14.483% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -17390.74 -902273.22 
+## Average estimating equation values:
+##      edges   triangle 
+##  -17390.74 -902273.22 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.208784, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.099300, low=0.000000, high=0.208784, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049214, low=0.000000, high=0.099300, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024583, low=0.000000, high=0.049214, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012296, low=0.000000, high=0.024583, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006150, low=0.000000, high=0.012296, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009224, low=0.006150, high=0.012296, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.010760, low=0.009224, high=0.012296, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.011528, low=0.010760, high=0.012296, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.011144, low=0.010760, high=0.011528, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.011143946731641  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.535 
+## Iteration 41 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0780328  0.1060697 
+## Sampler accepted  14.774% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -16766.91 -852981.59 
+## Average estimating equation values:
+##      edges   triangle 
+##  -16766.91 -852981.59 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.206323, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097888, low=0.000000, high=0.206323, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048444, low=0.000000, high=0.097888, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024180, low=0.000000, high=0.048444, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012089, low=0.000000, high=0.024180, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018133, low=0.012089, high=0.024180, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021156, low=0.018133, high=0.024180, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.022668, low=0.021156, high=0.024180, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.023424, low=0.022668, high=0.024180, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.023046, low=0.022668, high=0.023424, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0230455220271782  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.431 
+## Iteration 42 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0492736  0.1057517 
+## Sampler accepted  15.272% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##  -15783.0 -791981.6 
+## Average estimating equation values:
+##     edges  triangle 
+##  -15783.0 -791981.6 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.210907, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.100524, low=0.000000, high=0.210907, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049883, low=0.000000, high=0.100524, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024935, low=0.000000, high=0.049883, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.037396, low=0.024935, high=0.049883, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.031164, low=0.024935, high=0.037396, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.028049, low=0.024935, high=0.031164, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.026492, low=0.024935, high=0.028049, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.025713, low=0.024935, high=0.026492, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.026103, low=0.025713, high=0.026492, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0261025162749673  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.461 
+## Iteration 43 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0345884  0.1056005 
+## Sampler accepted  15.478% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -15009.57 -714792.39 
+## Average estimating equation values:
+##      edges   triangle 
+##  -15009.57 -714792.39 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.212105, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.101216, low=0.000000, high=0.212105, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050262, low=0.000000, high=0.101216, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025134, low=0.000000, high=0.050262, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012579, low=0.000000, high=0.025134, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018858, low=0.012579, high=0.025134, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021997, low=0.018858, high=0.025134, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.020428, low=0.018858, high=0.021997, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.021212, low=0.020428, high=0.021997, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.020820, low=0.020428, high=0.021212, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0208198196784707  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.441 
+## Iteration 44 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.0083035  0.1053765 
+## Sampler accepted  15.676% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -14068.23 -615079.81 
+## Average estimating equation values:
+##      edges   triangle 
+##  -14068.23 -615079.81 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.210040, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.100023, low=0.000000, high=0.210040, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049609, low=0.000000, high=0.100023, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024791, low=0.000000, high=0.049609, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012403, low=0.000000, high=0.024791, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018597, low=0.012403, high=0.024791, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.015500, low=0.012403, high=0.018597, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.017049, low=0.015500, high=0.018597, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.017823, low=0.017049, high=0.018597, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.017436, low=0.017049, high=0.017823, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0174358573769258  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.959 
+## Iteration 45 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.9851683  0.1052128 
+## Sampler accepted  16.129% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -12653.07 -497628.16 
+## Average estimating equation values:
+##      edges   triangle 
+##  -12653.07 -497628.16 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.208731, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.099269, low=0.000000, high=0.208731, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049197, low=0.000000, high=0.099269, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024574, low=0.000000, high=0.049197, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.036869, low=0.024574, high=0.049197, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.030719, low=0.024574, high=0.036869, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.027646, low=0.024574, high=0.030719, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.026110, low=0.024574, high=0.027646, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.025342, low=0.024574, high=0.026110, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.025726, low=0.025342, high=0.026110, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0257262581752363  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.468 
+## Iteration 46 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.9703558  0.1050654 
+## Sampler accepted  16.189% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -11295.73 -354001.58 
+## Average estimating equation values:
+##      edges   triangle 
+##  -11295.73 -354001.58 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.211957, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.101131, low=0.000000, high=0.211957, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050215, low=0.000000, high=0.101131, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025110, low=0.000000, high=0.050215, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012566, low=0.000000, high=0.025110, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018840, low=0.012566, high=0.025110, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021975, low=0.018840, high=0.025110, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.020407, low=0.018840, high=0.021975, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.021191, low=0.020407, high=0.021975, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.021583, low=0.021191, high=0.021975, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0215829521387679  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.637 
+## Iteration 47 of at most 100 with parameter: 
+##     edges  triangle 
+## -4.949607  0.104832 
+## Sampler accepted  16.528% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -8778.535 -137927.071 
+## Average estimating equation values:
+##       edges    triangle 
+##   -8778.535 -137927.071 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.210337, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.100194, low=0.000000, high=0.210337, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.049702, low=0.000000, high=0.100194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024840, low=0.000000, high=0.049702, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012428, low=0.000000, high=0.024840, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018635, low=0.012428, high=0.024840, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021737, low=0.018635, high=0.024840, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.023289, low=0.021737, high=0.024840, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.024064, low=0.023289, high=0.024840, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.024452, low=0.024064, high=0.024840, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0244521722284834  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.573 
+## Iteration 48 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.9208634  0.1045281 
+## Sampler accepted  16.771% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##  -4882.861 221478.946 
+## Average estimating equation values:
+##      edges   triangle 
+##  -4882.861 221478.946 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.211457, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.100842, low=0.000000, high=0.211457, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050057, low=0.000000, high=0.100842, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025026, low=0.000000, high=0.050057, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012524, low=0.000000, high=0.025026, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.018776, low=0.012524, high=0.025026, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.021901, low=0.018776, high=0.025026, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.023464, low=0.021901, high=0.025026, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.024245, low=0.023464, high=0.025026, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.024636, low=0.024245, high=0.025026, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0246356981731907  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.878 
+## Iteration 49 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8882538  0.1041922 
+## Sampler accepted  17.041% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   2144.117 839500.010 
+## Average estimating equation values:
+##      edges   triangle 
+##   2144.117 839500.010 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.211529, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.100883, low=0.000000, high=0.211529, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050079, low=0.000000, high=0.100883, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025038, low=0.000000, high=0.050079, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.037548, low=0.025038, high=0.050079, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.031292, low=0.025038, high=0.037548, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.028165, low=0.025038, high=0.031292, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.026601, low=0.025038, high=0.028165, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.027383, low=0.026601, high=0.028165, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.026992, low=0.026601, high=0.027383, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0269922791905113  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.636 
+## Iteration 50 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8716657  0.1040055 
+## Sampler accepted  16.732% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   15465.19 2060918.58 
+## Average estimating equation values:
+##      edges   triangle 
+##   15465.19 2060918.58 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.212455, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.101419, low=0.000000, high=0.212455, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050373, low=0.000000, high=0.101419, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025193, low=0.000000, high=0.050373, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.037774, low=0.025193, high=0.050373, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.044070, low=0.037774, high=0.050373, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.040921, low=0.037774, high=0.044070, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.039347, low=0.037774, high=0.040921, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.038560, low=0.037774, high=0.039347, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.038167, low=0.037774, high=0.038560, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0381669666457416  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.996 
+## Iteration 51 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8549923  0.1038296 
+## Sampler accepted  16.526% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   41287.05 4627562.35 
+## Average estimating equation values:
+##      edges   triangle 
+##   41287.05 4627562.35 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.216915, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.104016, low=0.000000, high=0.216915, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.051801, low=0.000000, high=0.104016, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025946, low=0.000000, high=0.051801, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.038873, low=0.025946, high=0.051801, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.032411, low=0.025946, high=0.038873, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.035642, low=0.032411, high=0.038873, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.034027, low=0.032411, high=0.035642, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.033219, low=0.032411, high=0.034027, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.033623, low=0.033219, high=0.034027, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0336229157081478  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.194 
+## Iteration 52 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8372943  0.1036564 
+## Sampler accepted  17.907% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##    96423.95 10409738.81 
+## Average estimating equation values:
+##       edges    triangle 
+##    96423.95 10409738.81 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.215088, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 2, est=0.362294, low=0.215088, high=1.000000, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.281181, low=0.215088, high=0.362294, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.246838, low=0.215088, high=0.281181, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.230687, low=0.215088, high=0.246838, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.222823, low=0.215088, high=0.230687, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.218940, low=0.215088, high=0.222823, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.220878, low=0.218940, high=0.222823, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.221850, low=0.220878, high=0.222823, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.222336, low=0.221850, high=0.222823, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.222336321743904  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 0.4339 
+## Iteration 53 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8375774  0.1036586 
+## Sampler accepted  22.878% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   221134.9 25706305.3 
+## Average estimating equation values:
+##      edges   triangle 
+##   221134.9 25706305.3 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.307909, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.162375, low=0.000000, high=0.307909, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.086250, low=0.000000, high=0.162375, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.125098, low=0.086250, high=0.162375, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.143888, low=0.125098, high=0.162375, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.134536, low=0.125098, high=0.143888, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.129828, low=0.125098, high=0.134536, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.132185, low=0.129828, high=0.134536, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.131007, low=0.129828, high=0.132185, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.130418, low=0.129828, high=0.131007, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.130123, low=0.129828, high=0.130418, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.130123154147224  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.198 
+## Iteration 54 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8385040  0.1036653 
+## Sampler accepted  27.408% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##      edges   triangle 
+##   447154.5 65963222.9 
+## Average estimating equation values:
+##      edges   triangle 
+##   447154.5 65963222.9 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.258119, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.129154, low=0.000000, high=0.258119, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.066077, low=0.000000, high=0.129154, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.097795, low=0.066077, high=0.129154, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.082003, low=0.066077, high=0.097795, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.074060, low=0.066077, high=0.082003, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.078036, low=0.074060, high=0.082003, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.076049, low=0.074060, high=0.078036, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.077043, low=0.076049, high=0.078036, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.077540, low=0.077043, high=0.078036, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0775398008101985  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.226 
+## Iteration 55 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8388698  0.1036669 
+## Sampler accepted  24.340% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##    709952.2 146701723.7 
+## Average estimating equation values:
+##       edges    triangle 
+##    709952.2 146701723.7 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.233555, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.113916, low=0.000000, high=0.233555, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.057325, low=0.000000, high=0.113916, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.028885, low=0.000000, high=0.057325, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.043144, low=0.028885, high=0.057325, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.036026, low=0.028885, high=0.043144, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.032459, low=0.028885, high=0.036026, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.030673, low=0.028885, high=0.032459, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.031566, low=0.030673, high=0.032459, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.031120, low=0.030673, high=0.031566, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0311196287602626  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.211 
+## Iteration 56 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8392696  0.1036678 
+## Sampler accepted  18.170% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##    925033.7 260391772.8 
+## Average estimating equation values:
+##       edges    triangle 
+##    925033.7 260391772.8 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.214089, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.102368, low=0.000000, high=0.214089, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.050894, low=0.000000, high=0.102368, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.025467, low=0.000000, high=0.050894, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012750, low=0.000000, high=0.025467, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006381, low=0.000000, high=0.012750, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.009567, low=0.006381, high=0.012750, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.011159, low=0.009567, high=0.012750, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.010363, low=0.009567, high=0.011159, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.010761, low=0.010363, high=0.011159, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.0107607928665878  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.384 
+## Iteration 57 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8400968  0.1036691 
+## Sampler accepted  13.261% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1083424 384604131 
+## Average estimating equation values:
+##     edges  triangle 
+##   1083424 384604131 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.206178, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.097805, low=0.000000, high=0.206178, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.048399, low=0.000000, high=0.097805, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.024156, low=0.000000, high=0.048399, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.012077, low=0.000000, high=0.024156, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.006039, low=0.000000, high=0.012077, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.003020, low=0.000000, high=0.006039, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.004530, low=0.003020, high=0.006039, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.003775, low=0.003020, high=0.004530, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.004152, low=0.003775, high=0.004530, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.004152402419497  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.576 
+## Iteration 58 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8419682  0.1036711 
+## Sampler accepted   9.704% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1199026 501750995 
+## Average estimating equation values:
+##     edges  triangle 
+##   1199026 501750995 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.203689, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.096385, low=0.000000, high=0.203689, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047628, low=0.000000, high=0.096385, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023752, low=0.000000, high=0.047628, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011870, low=0.000000, high=0.023752, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005935, low=0.000000, high=0.011870, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002967, low=0.000000, high=0.005935, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001484, low=0.000000, high=0.002967, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.002226, low=0.001484, high=0.002967, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.001855, low=0.001484, high=0.002226, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00185463860592754  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.78 
+## Iteration 59 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8459560  0.1036747 
+## Sampler accepted   7.039% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1283455 603156111 
+## Average estimating equation values:
+##     edges  triangle 
+##   1283455 603156111 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202832, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095898, low=0.000000, high=0.202832, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047364, low=0.000000, high=0.095898, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023614, low=0.000000, high=0.047364, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011799, low=0.000000, high=0.023614, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005899, low=0.000000, high=0.011799, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002949, low=0.000000, high=0.005899, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001475, low=0.000000, high=0.002949, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000737, low=0.000000, high=0.001475, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.001106, low=0.000737, high=0.001475, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.00110602365970436  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 4.723 
+## Iteration 60 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8564378  0.1036828 
+## Sampler accepted   5.114% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1344582 685618088 
+## Average estimating equation values:
+##     edges  triangle 
+##   1344582 685618088 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202554, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095740, low=0.000000, high=0.202554, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047278, low=0.000000, high=0.095740, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023569, low=0.000000, high=0.047278, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011776, low=0.000000, high=0.023569, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005887, low=0.000000, high=0.011776, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002944, low=0.000000, high=0.005887, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001472, low=0.000000, high=0.002944, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000736, low=0.000000, high=0.001472, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000368, low=0.000000, high=0.000736, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367944448193958  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.348 
+## Iteration 61 of at most 100 with parameter: 
+##      edges   triangle 
+## -4.8712794  0.1036933 
+## Sampler accepted   3.716% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1389175 750816675 
+## Average estimating equation values:
+##     edges  triangle 
+##   1389175 750816675 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202281, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202281, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224810769262  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 9.094 
+## Iteration 62 of at most 100 with parameter: 
+##     edges  triangle 
+## -4.926761  0.103730 
+## Sampler accepted   2.739% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1421704 801169384 
+## Average estimating equation values:
+##     edges  triangle 
+##   1421704 801169384 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224110186638  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 63 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.1338431  0.1038606 
+## Sampler accepted   1.991% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1445612 839710068 
+## Average estimating equation values:
+##     edges  triangle 
+##   1445612 839710068 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109504587  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 64 of at most 100 with parameter: 
+##      edges   triangle 
+## -5.9377803  0.1043508 
+## Sampler accepted   1.444% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1462832 868285627 
+## Average estimating equation values:
+##     edges  triangle 
+##   1462832 868285627 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 65 of at most 100 with parameter: 
+##      edges   triangle 
+## -9.1807260  0.1062816 
+## Sampler accepted   1.047% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1475352 889498269 
+## Average estimating equation values:
+##     edges  triangle 
+##   1475352 889498269 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 66 of at most 100 with parameter: 
+##      edges   triangle 
+## -19.891835   0.112547 
+## Sampler accepted   0.771% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1484519 905268906 
+## Average estimating equation values:
+##     edges  triangle 
+##   1484519 905268906 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 67 of at most 100 with parameter: 
+##       edges    triangle 
+## -55.4734187   0.1330979 
+## Sampler accepted   0.545% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1491169 916834065 
+## Average estimating equation values:
+##     edges  triangle 
+##   1491169 916834065 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 68 of at most 100 with parameter: 
+##        edges     triangle 
+## -196.1162652    0.2135935 
+## Sampler accepted   0.410% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1495930 925177685 
+## Average estimating equation values:
+##     edges  triangle 
+##   1495930 925177685 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 69 of at most 100 with parameter: 
+##        edges     triangle 
+## -645.7437832    0.4693276 
+## Sampler accepted   0.299% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1499534 931530237 
+## Average estimating equation values:
+##     edges  triangle 
+##   1499534 931530237 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 70 of at most 100 with parameter: 
+##       edges    triangle 
+## -2712.35062     1.63886 
+## Sampler accepted   0.218% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1502120 936107904 
+## Average estimating equation values:
+##     edges  triangle 
+##   1502120 936107904 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 71 of at most 100 with parameter: 
+##      edges   triangle 
+## -9547.0665     5.4933 
+## Sampler accepted   0.161% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1504034 939507468 
+## Average estimating equation values:
+##     edges  triangle 
+##   1504034 939507468 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 72 of at most 100 with parameter: 
+##        edges     triangle 
+## -27318.93598     15.48856 
+## Sampler accepted   9.813% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##   1498062 929871169 
+## Average estimating equation values:
+##     edges  triangle 
+##   1498062 929871169 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.047194, low=0.000000, high=0.095584, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.023525, low=0.000000, high=0.047194, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.011754, low=0.000000, high=0.023525, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.005876, low=0.000000, high=0.011754, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.002938, low=0.000000, high=0.005876, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.001469, low=0.000000, high=0.002938, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.000734, low=0.000000, high=0.001469, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.000367, low=0.000000, high=0.000734, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000367224109503919  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 1.277 
+## Iteration 73 of at most 100 with parameter: 
+##        edges     triangle 
+## -27318.94337     15.48857 
+## Sampler accepted  82.710% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##    958109.6 304974491.5 
+## Average estimating equation values:
+##       edges    triangle 
+##    958109.6 304974491.5 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.202280, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.095584, low=0.000000, high=0.202280, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.146605, low=0.095584, high=0.202280, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.173695, low=0.146605, high=0.202280, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.159987, low=0.146605, high=0.173695, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.153258, low=0.146605, high=0.159987, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 7, est=0.156613, low=0.153258, high=0.159987, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 8, est=0.158297, low=0.156613, high=0.159987, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 9, est=0.159142, low=0.158297, high=0.159987, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 10, est=0.159564, low=0.159142, high=0.159987, test=1.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.159564222422945  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.202 
+## Iteration 74 of at most 100 with parameter: 
+##        edges     triangle 
+## -27318.94342     15.48857 
+## Sampler accepted  60.339% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##     edges  triangle 
+##  237592.6 6705732.7 
+## Average estimating equation values:
+##     edges  triangle 
+##  237592.6 6705732.7 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.273082, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, inside hull.
+## iter= 2, est=0.436979, low=0.273082, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 3, est=0.561698, low=0.436979, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 4, est=0.664126, low=0.561698, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 5, est=0.750558, low=0.664126, high=1.000000, test=1.
+## is.inCH: iter= 1, inside hull.
+## iter= 6, est=0.823176, low=0.750558, high=1.000000, test=1.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.782337, low=0.750558, high=0.823176, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.765599, low=0.750558, high=0.782337, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.757891, low=0.750558, high=0.765599, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.754180, low=0.750558, high=0.757891, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.752359, low=0.750558, high=0.754180, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 12, est=0.751456, low=0.750558, high=0.752359, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 13, est=0.751007, low=0.750558, high=0.751456, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.75100650335406  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood improved by 2.129 
+## Iteration 75 of at most 100 with parameter: 
+##        edges     triangle 
+## -27318.94345     15.48857 
+## Sampler accepted   3.883% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##       edges    triangle 
+##   -94202.14 -9074174.99 
+## Average estimating equation values:
+##       edges    triangle 
+##   -94202.14 -9074174.99 
+## is.inCH: iter= 1, outside hull.
+## iter= 1, est=0.676118, low=0.000000, high=1.000000, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 2, est=0.502563, low=0.000000, high=0.676118, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 3, est=0.374892, low=0.000000, high=0.502563, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 4, est=0.273058, low=0.000000, high=0.374892, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 5, est=0.190501, low=0.000000, high=0.273058, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 6, est=0.125303, low=0.000000, high=0.190501, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 7, est=0.076976, low=0.000000, high=0.125303, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 8, est=0.044241, low=0.000000, high=0.076976, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 9, est=0.024089, low=0.000000, high=0.044241, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 10, est=0.012639, low=0.000000, high=0.024089, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 11, est=0.006484, low=0.000000, high=0.012639, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 12, est=0.003286, low=0.000000, high=0.006484, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 13, est=0.001654, low=0.000000, high=0.003286, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 14, est=0.000830, low=0.000000, high=0.001654, test=0.
+## is.inCH: iter= 1, outside hull.
+## iter= 15, est=0.000416, low=0.000000, high=0.000830, test=0.
+## Calling MCMLE Optimization...
+## Using Newton-Raphson Step with step length  0.000415686096393975  ...
+## Using lognormal metric (see control.ergm function).
+## Using log-normal approx (no optim)
+## The log-likelihood did not improve.
+## Iteration 76 of at most 100 with parameter: 
+##        edges     triangle 
+## -27318.94586     15.49972 
+## Sampler accepted   0.000% of 1000000 proposed steps.
+## Sample size = 1000 by 1000 
+## Back from unconstrained MCMC. Average statistics:
+##    edges triangle 
+##   -95707 -9074443
+</code></pre>
+
+<pre><code>## Error in ergm.MCMLE(init, nw, model, initialfit = (initialfit &lt;- NULL), : Unconstrained MCMC sampling did not mix at all. Optimization cannot continue.
+</code></pre>
+
+<pre><code class="r">Sys.time() - t0
+</code></pre>
+
+<pre><code>## Time difference of 5.420687 hours
+</code></pre>
+
+<pre><code class="r">mod3
+</code></pre>
+
+<pre><code>## 
+## MLE Coefficients:
+##    edges  triangle  
+## -5.02288   0.09603
+</code></pre>
+
+<pre><code class="r">mcmc.diagnostics(mod3)
+</code></pre>
+
+<pre><code>## Sample statistics summary:
+## 
+## Iterations = 16000:24000
+## Thinning interval = 1000 
+## Number of chains = 48 
+## Sample size per chain = 9 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##            Mean   SD Naive SE Time-series SE
+## edges     170.3  105    5.051          2.343
+## triangle 3050.0 2281  109.756         43.009
+## 
+## 2. Quantiles for each variable:
+## 
+##              2.5%  25%  50%  75%  97.5%
+## edges      -52.92  106  181  235  348.9
+## triangle -1287.40 1737 3015 4520 6870.1
+## 
+## 
+## Sample statistics cross-correlations:
+##              edges  triangle
+## edges    1.0000000 0.1874472
+## triangle 0.1874472 1.0000000
+## 
+## Sample statistics auto-correlation:
+## Chain 1 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.2150201  0.63507769
+## Lag 2000  0.3394925  0.27155006
+## Lag 3000  0.1139208 -0.09486592
+## Lag 4000 -0.1150741 -0.24603801
+## Lag 5000 -0.2842192 -0.32174400
+## Chain 2 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.48360344  0.62782035
+## Lag 2000  0.17324889  0.28078374
+## Lag 3000  0.05445087  0.08528762
+## Lag 4000 -0.05877127 -0.18772262
+## Lag 5000 -0.15146002 -0.32725714
+## Chain 3 
+##                edges     triangle
+## Lag 0     1.00000000  1.000000000
+## Lag 1000  0.49861808  0.622883718
+## Lag 2000  0.08122947  0.265122446
+## Lag 3000 -0.17051497  0.008319421
+## Lag 4000 -0.13625829 -0.154821552
+## Lag 5000 -0.15175064 -0.273135032
+## Chain 4 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000 -0.44152980  0.60989198
+## Lag 2000  0.08326441  0.16602612
+## Lag 3000 -0.02363228 -0.02194191
+## Lag 4000 -0.17164914 -0.20692141
+## Lag 5000 -0.12044586 -0.29087329
+## Chain 5 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.41668426  0.74890193
+## Lag 2000 -0.09855042  0.36759965
+## Lag 3000 -0.25659700  0.01907838
+## Lag 4000 -0.46435860 -0.25985501
+## Lag 5000 -0.22848498 -0.41634989
+## Chain 6 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.52062822  0.68349551
+## Lag 2000  0.17030005  0.34262553
+## Lag 3000  0.03129395  0.05861994
+## Lag 4000 -0.08977965 -0.30180417
+## Lag 5000 -0.18131739 -0.44682033
+## Chain 7 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.61892578  0.55487076
+## Lag 2000  0.19861196  0.11797822
+## Lag 3000  0.04552089  0.02217845
+## Lag 4000 -0.08030199 -0.03737706
+## Lag 5000 -0.22557840 -0.14805977
+## Chain 8 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.367372064  0.70824574
+## Lag 2000  0.037729034  0.38428744
+## Lag 3000 -0.057135320  0.07587746
+## Lag 4000  0.002785787 -0.25203111
+## Lag 5000 -0.065904109 -0.41682045
+## Chain 9 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.58164092  0.73115975
+## Lag 2000  0.31894744  0.39004973
+## Lag 3000  0.03924156  0.04571461
+## Lag 4000 -0.16113460 -0.26043069
+## Lag 5000 -0.32937307 -0.43941320
+## Chain 10 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.73222977  0.61251854
+## Lag 2000  0.38252693  0.40302231
+## Lag 3000 -0.04302255  0.07178921
+## Lag 4000 -0.29957311 -0.20286412
+## Lag 5000 -0.47181051 -0.38308401
+## Chain 11 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5860517  0.55594046
+## Lag 2000  0.2826209  0.12551577
+## Lag 3000  0.1248594 -0.01085912
+## Lag 4000 -0.1557930 -0.07253292
+## Lag 5000 -0.3180540 -0.14514988
+## Chain 12 
+##               edges   triangle
+## Lag 0     1.0000000  1.0000000
+## Lag 1000  0.3959313  0.6703771
+## Lag 2000 -0.1108636  0.2703114
+## Lag 3000 -0.4458647  0.0388427
+## Lag 4000 -0.3427625 -0.1212525
+## Lag 5000 -0.3179461 -0.3069712
+## Chain 13 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.64555117  0.56716018
+## Lag 2000  0.39112002  0.33453103
+## Lag 3000  0.06595113  0.07541505
+## Lag 4000 -0.20059890 -0.13919742
+## Lag 5000 -0.39272539 -0.28954443
+## Chain 14 
+##                edges      triangle
+## Lag 0     1.00000000  1.0000000000
+## Lag 1000  0.52532734  0.6678835140
+## Lag 2000  0.16026113  0.3134353115
+## Lag 3000 -0.07889307 -0.0005011462
+## Lag 4000 -0.16720711 -0.2189685710
+## Lag 5000 -0.18985678 -0.3327773249
+## Chain 15 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.607556357  0.60894281
+## Lag 2000  0.160995567  0.23440492
+## Lag 3000 -0.003307159  0.09853314
+## Lag 4000 -0.138322958 -0.22826330
+## Lag 5000 -0.370590455 -0.37340234
+## Chain 16 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.65862715  0.75135159
+## Lag 2000  0.27658807  0.37806405
+## Lag 3000 -0.05332035 -0.00895117
+## Lag 4000 -0.21537241 -0.29738447
+## Lag 5000 -0.32031870 -0.43031525
+## Chain 17 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.55321598  0.64158932
+## Lag 2000  0.21480598  0.28370539
+## Lag 3000  0.04670865 -0.04217752
+## Lag 4000 -0.08210868 -0.14188322
+## Lag 5000 -0.20267125 -0.27673092
+## Chain 18 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.700244924  0.62964170
+## Lag 2000  0.362977709  0.36328079
+## Lag 3000 -0.009577912  0.06089821
+## Lag 4000 -0.229132949 -0.16580979
+## Lag 5000 -0.398173324 -0.32739428
+## Chain 19 
+##                edges   triangle
+## Lag 0     1.00000000  1.0000000
+## Lag 1000  0.44127702  0.6197500
+## Lag 2000  0.12689794  0.3547429
+## Lag 3000 -0.08582202  0.1049774
+## Lag 4000 -0.08014077 -0.2029339
+## Lag 5000 -0.09361488 -0.3594607
+## Chain 20 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.4593965  0.43366134
+## Lag 2000  0.2938516  0.15031210
+## Lag 3000  0.1201552  0.07332575
+## Lag 4000 -0.1128731 -0.04372894
+## Lag 5000 -0.2911370 -0.16469216
+## Chain 21 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.72488576  0.74023062
+## Lag 2000  0.38913368  0.40294692
+## Lag 3000 -0.02283536  0.02647826
+## Lag 4000 -0.35302723 -0.31797811
+## Lag 5000 -0.44706719 -0.47116473
+## Chain 22 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.68276802  0.50275070
+## Lag 2000  0.33494852  0.20410775
+## Lag 3000  0.06480921  0.05848774
+## Lag 4000 -0.27241066 -0.08867415
+## Lag 5000 -0.40096911 -0.17424938
+## Chain 23 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.51869227  0.65108335
+## Lag 2000  0.18321397  0.32206873
+## Lag 3000 -0.02789767  0.04898043
+## Lag 4000 -0.05065313 -0.14222073
+## Lag 5000 -0.12036863 -0.30710845
+## Chain 24 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6101890  0.71587360
+## Lag 2000  0.2652927  0.36798129
+## Lag 3000  0.0248002 -0.01943808
+## Lag 4000 -0.1470494 -0.23726192
+## Lag 5000 -0.3049096 -0.38221756
+## Chain 25 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.59014966  0.70226644
+## Lag 2000  0.30139951  0.36825127
+## Lag 3000  0.05588471  0.06880929
+## Lag 4000 -0.12676450 -0.21619994
+## Lag 5000 -0.29167708 -0.38673504
+## Chain 26 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.57320157  0.71085790
+## Lag 2000  0.27905029  0.32089875
+## Lag 3000  0.06941626  0.03784898
+## Lag 4000 -0.29142102 -0.20503622
+## Lag 5000 -0.30295416 -0.35035399
+## Chain 27 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.74846506  0.67742774
+## Lag 2000  0.41882718  0.38590048
+## Lag 3000  0.02055465  0.07346747
+## Lag 4000 -0.27720708 -0.22597763
+## Lag 5000 -0.44245483 -0.41154541
+## Chain 28 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.61983696  0.58948508
+## Lag 2000  0.33688859  0.23196332
+## Lag 3000  0.07622283  0.03012629
+## Lag 4000 -0.17703804 -0.06303137
+## Lag 5000 -0.35210598 -0.19258691
+## Chain 29 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.60430488  0.68844066
+## Lag 2000  0.23698292  0.29991520
+## Lag 3000  0.04336129  0.01671647
+## Lag 4000 -0.11582980 -0.16852131
+## Lag 5000 -0.23794441 -0.30765050
+## Chain 30 
+##                edges     triangle
+## Lag 0     1.00000000  1.000000000
+## Lag 1000  0.64830325  0.580820540
+## Lag 2000  0.21916626  0.155593247
+## Lag 3000  0.02032401  0.001090995
+## Lag 4000 -0.14425757 -0.115207213
+## Lag 5000 -0.26362228 -0.221616558
+## Chain 31 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.65366379  0.70123259
+## Lag 2000  0.32210715  0.41607788
+## Lag 3000  0.02875203  0.05741242
+## Lag 4000 -0.13557857 -0.26015726
+## Lag 5000 -0.31271093 -0.43332180
+## Chain 32 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.42344097  0.63279830
+## Lag 2000  0.04982331  0.36912309
+## Lag 3000 -0.07550406  0.04451466
+## Lag 4000  0.02587994 -0.16697765
+## Lag 5000  0.04131347 -0.32642232
+## Chain 33 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.68536562  0.69958560
+## Lag 2000  0.27568155  0.36070461
+## Lag 3000  0.04040239  0.02827698
+## Lag 4000 -0.19562880 -0.18382380
+## Lag 5000 -0.34193987 -0.36577876
+## Chain 34 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.50839914  0.50681690
+## Lag 2000  0.21354600  0.05720358
+## Lag 3000  0.04223815 -0.04337481
+## Lag 4000 -0.18008797 -0.07083645
+## Lag 5000 -0.31772998 -0.08321183
+## Chain 35 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.499954184  0.62660850
+## Lag 2000  0.185700073  0.30881619
+## Lag 3000 -0.009150173  0.05663278
+## Lag 4000 -0.217077704 -0.12639299
+## Lag 5000 -0.344244162 -0.28661470
+## Chain 36 
+##                edges   triangle
+## Lag 0     1.00000000  1.0000000
+## Lag 1000 -0.04988202  0.6060424
+## Lag 2000 -0.53730307  0.3164335
+## Lag 3000 -0.17900271  0.1147662
+## Lag 4000  0.15400097 -0.1847407
+## Lag 5000  0.20655493 -0.3339054
+## Chain 37 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6175530  0.63225761
+## Lag 2000  0.3500911  0.27408778
+## Lag 3000  0.1017933  0.04432226
+## Lag 4000 -0.2445188 -0.27540636
+## Lag 5000 -0.3975500 -0.35122906
+## Chain 38 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.55786845  0.66124747
+## Lag 2000  0.22259542  0.34960778
+## Lag 3000  0.03419583  0.07889562
+## Lag 4000 -0.08026944 -0.21056934
+## Lag 5000 -0.22143897 -0.36618015
+## Chain 39 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.43378642  0.64382389
+## Lag 2000  0.26407177  0.31336395
+## Lag 3000  0.05625872  0.07836578
+## Lag 4000 -0.07864936 -0.17733878
+## Lag 5000 -0.16772708 -0.36093953
+## Chain 40 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6336806  0.56309032
+## Lag 2000  0.2088294  0.31604996
+## Lag 3000 -0.1227679  0.06868489
+## Lag 4000 -0.2326389 -0.14874783
+## Lag 5000 -0.3561508 -0.29131805
+## Chain 41 
+##               edges   triangle
+## Lag 0     1.0000000  1.0000000
+## Lag 1000  0.5641588  0.6221187
+## Lag 2000  0.3146968  0.3322952
+## Lag 3000  0.1581561  0.1027761
+## Lag 4000 -0.1866108 -0.1726466
+## Lag 5000 -0.3974922 -0.3333163
+## Chain 42 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5149848  0.71289723
+## Lag 2000  0.1976544  0.41517206
+## Lag 3000 -0.1038823  0.04565877
+## Lag 4000 -0.2522279 -0.28481367
+## Lag 5000 -0.2352933 -0.43750429
+## Chain 43 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.29457844  0.60225368
+## Lag 2000 -0.07658215  0.37243110
+## Lag 3000 -0.22047001  0.03958832
+## Lag 4000 -0.40733869 -0.16282651
+## Lag 5000 -0.03607504 -0.31091727
+## Chain 44 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.21368537  0.62590005
+## Lag 2000  0.11519252  0.36428462
+## Lag 3000  0.21749175  0.09231972
+## Lag 4000 -0.07327833 -0.18104268
+## Lag 5000 -0.29988999 -0.35494293
+## Chain 45 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.59030195  0.48948654
+## Lag 2000  0.25660762  0.22002820
+## Lag 3000  0.05650963 -0.02556070
+## Lag 4000 -0.08862587 -0.06758631
+## Lag 5000 -0.23465099 -0.15528951
+## Chain 46 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.639966273  0.62062300
+## Lag 2000  0.282251265  0.36912791
+## Lag 3000 -0.008010118  0.06986511
+## Lag 4000 -0.130691400 -0.25700423
+## Lag 5000 -0.255691400 -0.40428114
+## Chain 47 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.49127400  0.55661236
+## Lag 2000 -0.10122164  0.22416590
+## Lag 3000 -0.15881326  0.05352921
+## Lag 4000  0.04712042 -0.13881000
+## Lag 5000 -0.06980803 -0.28348431
+## Chain 48 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5250000  0.70202045
+## Lag 2000  0.3765625  0.37219222
+## Lag 3000  0.0828125  0.07170431
+## Lag 4000 -0.1671875 -0.22140711
+## Lag 5000 -0.3281250 -0.38950184
+## 
+## Sample statistics burn-in diagnostic (Geweke):
+</code></pre>
+
+<pre><code>## Error in ar.yw.default(x, aic = aic, order.max = order.max, na.action = na.action, : &#39;order.max&#39; must be &gt;= 1
+</code></pre>
+
+<pre><code class="r">pdf(&quot;./figure2/mod3diagnostics.pdf&quot;)
+mcmc.diagnostics(mod3)
+</code></pre>
+
+<pre><code>## Sample statistics summary:
+## 
+## Iterations = 16000:24000
+## Thinning interval = 1000 
+## Number of chains = 48 
+## Sample size per chain = 9 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##            Mean   SD Naive SE Time-series SE
+## edges     170.3  105    5.051          2.343
+## triangle 3050.0 2281  109.756         43.009
+## 
+## 2. Quantiles for each variable:
+## 
+##              2.5%  25%  50%  75%  97.5%
+## edges      -52.92  106  181  235  348.9
+## triangle -1287.40 1737 3015 4520 6870.1
+## 
+## 
+## Sample statistics cross-correlations:
+##              edges  triangle
+## edges    1.0000000 0.1874472
+## triangle 0.1874472 1.0000000
+## 
+## Sample statistics auto-correlation:
+## Chain 1 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.2150201  0.63507769
+## Lag 2000  0.3394925  0.27155006
+## Lag 3000  0.1139208 -0.09486592
+## Lag 4000 -0.1150741 -0.24603801
+## Lag 5000 -0.2842192 -0.32174400
+## Chain 2 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.48360344  0.62782035
+## Lag 2000  0.17324889  0.28078374
+## Lag 3000  0.05445087  0.08528762
+## Lag 4000 -0.05877127 -0.18772262
+## Lag 5000 -0.15146002 -0.32725714
+## Chain 3 
+##                edges     triangle
+## Lag 0     1.00000000  1.000000000
+## Lag 1000  0.49861808  0.622883718
+## Lag 2000  0.08122947  0.265122446
+## Lag 3000 -0.17051497  0.008319421
+## Lag 4000 -0.13625829 -0.154821552
+## Lag 5000 -0.15175064 -0.273135032
+## Chain 4 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000 -0.44152980  0.60989198
+## Lag 2000  0.08326441  0.16602612
+## Lag 3000 -0.02363228 -0.02194191
+## Lag 4000 -0.17164914 -0.20692141
+## Lag 5000 -0.12044586 -0.29087329
+## Chain 5 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.41668426  0.74890193
+## Lag 2000 -0.09855042  0.36759965
+## Lag 3000 -0.25659700  0.01907838
+## Lag 4000 -0.46435860 -0.25985501
+## Lag 5000 -0.22848498 -0.41634989
+## Chain 6 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.52062822  0.68349551
+## Lag 2000  0.17030005  0.34262553
+## Lag 3000  0.03129395  0.05861994
+## Lag 4000 -0.08977965 -0.30180417
+## Lag 5000 -0.18131739 -0.44682033
+## Chain 7 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.61892578  0.55487076
+## Lag 2000  0.19861196  0.11797822
+## Lag 3000  0.04552089  0.02217845
+## Lag 4000 -0.08030199 -0.03737706
+## Lag 5000 -0.22557840 -0.14805977
+## Chain 8 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.367372064  0.70824574
+## Lag 2000  0.037729034  0.38428744
+## Lag 3000 -0.057135320  0.07587746
+## Lag 4000  0.002785787 -0.25203111
+## Lag 5000 -0.065904109 -0.41682045
+## Chain 9 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.58164092  0.73115975
+## Lag 2000  0.31894744  0.39004973
+## Lag 3000  0.03924156  0.04571461
+## Lag 4000 -0.16113460 -0.26043069
+## Lag 5000 -0.32937307 -0.43941320
+## Chain 10 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.73222977  0.61251854
+## Lag 2000  0.38252693  0.40302231
+## Lag 3000 -0.04302255  0.07178921
+## Lag 4000 -0.29957311 -0.20286412
+## Lag 5000 -0.47181051 -0.38308401
+## Chain 11 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5860517  0.55594046
+## Lag 2000  0.2826209  0.12551577
+## Lag 3000  0.1248594 -0.01085912
+## Lag 4000 -0.1557930 -0.07253292
+## Lag 5000 -0.3180540 -0.14514988
+## Chain 12 
+##               edges   triangle
+## Lag 0     1.0000000  1.0000000
+## Lag 1000  0.3959313  0.6703771
+## Lag 2000 -0.1108636  0.2703114
+## Lag 3000 -0.4458647  0.0388427
+## Lag 4000 -0.3427625 -0.1212525
+## Lag 5000 -0.3179461 -0.3069712
+## Chain 13 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.64555117  0.56716018
+## Lag 2000  0.39112002  0.33453103
+## Lag 3000  0.06595113  0.07541505
+## Lag 4000 -0.20059890 -0.13919742
+## Lag 5000 -0.39272539 -0.28954443
+## Chain 14 
+##                edges      triangle
+## Lag 0     1.00000000  1.0000000000
+## Lag 1000  0.52532734  0.6678835140
+## Lag 2000  0.16026113  0.3134353115
+## Lag 3000 -0.07889307 -0.0005011462
+## Lag 4000 -0.16720711 -0.2189685710
+## Lag 5000 -0.18985678 -0.3327773249
+## Chain 15 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.607556357  0.60894281
+## Lag 2000  0.160995567  0.23440492
+## Lag 3000 -0.003307159  0.09853314
+## Lag 4000 -0.138322958 -0.22826330
+## Lag 5000 -0.370590455 -0.37340234
+## Chain 16 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.65862715  0.75135159
+## Lag 2000  0.27658807  0.37806405
+## Lag 3000 -0.05332035 -0.00895117
+## Lag 4000 -0.21537241 -0.29738447
+## Lag 5000 -0.32031870 -0.43031525
+## Chain 17 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.55321598  0.64158932
+## Lag 2000  0.21480598  0.28370539
+## Lag 3000  0.04670865 -0.04217752
+## Lag 4000 -0.08210868 -0.14188322
+## Lag 5000 -0.20267125 -0.27673092
+## Chain 18 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.700244924  0.62964170
+## Lag 2000  0.362977709  0.36328079
+## Lag 3000 -0.009577912  0.06089821
+## Lag 4000 -0.229132949 -0.16580979
+## Lag 5000 -0.398173324 -0.32739428
+## Chain 19 
+##                edges   triangle
+## Lag 0     1.00000000  1.0000000
+## Lag 1000  0.44127702  0.6197500
+## Lag 2000  0.12689794  0.3547429
+## Lag 3000 -0.08582202  0.1049774
+## Lag 4000 -0.08014077 -0.2029339
+## Lag 5000 -0.09361488 -0.3594607
+## Chain 20 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.4593965  0.43366134
+## Lag 2000  0.2938516  0.15031210
+## Lag 3000  0.1201552  0.07332575
+## Lag 4000 -0.1128731 -0.04372894
+## Lag 5000 -0.2911370 -0.16469216
+## Chain 21 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.72488576  0.74023062
+## Lag 2000  0.38913368  0.40294692
+## Lag 3000 -0.02283536  0.02647826
+## Lag 4000 -0.35302723 -0.31797811
+## Lag 5000 -0.44706719 -0.47116473
+## Chain 22 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.68276802  0.50275070
+## Lag 2000  0.33494852  0.20410775
+## Lag 3000  0.06480921  0.05848774
+## Lag 4000 -0.27241066 -0.08867415
+## Lag 5000 -0.40096911 -0.17424938
+## Chain 23 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.51869227  0.65108335
+## Lag 2000  0.18321397  0.32206873
+## Lag 3000 -0.02789767  0.04898043
+## Lag 4000 -0.05065313 -0.14222073
+## Lag 5000 -0.12036863 -0.30710845
+## Chain 24 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6101890  0.71587360
+## Lag 2000  0.2652927  0.36798129
+## Lag 3000  0.0248002 -0.01943808
+## Lag 4000 -0.1470494 -0.23726192
+## Lag 5000 -0.3049096 -0.38221756
+## Chain 25 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.59014966  0.70226644
+## Lag 2000  0.30139951  0.36825127
+## Lag 3000  0.05588471  0.06880929
+## Lag 4000 -0.12676450 -0.21619994
+## Lag 5000 -0.29167708 -0.38673504
+## Chain 26 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.57320157  0.71085790
+## Lag 2000  0.27905029  0.32089875
+## Lag 3000  0.06941626  0.03784898
+## Lag 4000 -0.29142102 -0.20503622
+## Lag 5000 -0.30295416 -0.35035399
+## Chain 27 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.74846506  0.67742774
+## Lag 2000  0.41882718  0.38590048
+## Lag 3000  0.02055465  0.07346747
+## Lag 4000 -0.27720708 -0.22597763
+## Lag 5000 -0.44245483 -0.41154541
+## Chain 28 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.61983696  0.58948508
+## Lag 2000  0.33688859  0.23196332
+## Lag 3000  0.07622283  0.03012629
+## Lag 4000 -0.17703804 -0.06303137
+## Lag 5000 -0.35210598 -0.19258691
+## Chain 29 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.60430488  0.68844066
+## Lag 2000  0.23698292  0.29991520
+## Lag 3000  0.04336129  0.01671647
+## Lag 4000 -0.11582980 -0.16852131
+## Lag 5000 -0.23794441 -0.30765050
+## Chain 30 
+##                edges     triangle
+## Lag 0     1.00000000  1.000000000
+## Lag 1000  0.64830325  0.580820540
+## Lag 2000  0.21916626  0.155593247
+## Lag 3000  0.02032401  0.001090995
+## Lag 4000 -0.14425757 -0.115207213
+## Lag 5000 -0.26362228 -0.221616558
+## Chain 31 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.65366379  0.70123259
+## Lag 2000  0.32210715  0.41607788
+## Lag 3000  0.02875203  0.05741242
+## Lag 4000 -0.13557857 -0.26015726
+## Lag 5000 -0.31271093 -0.43332180
+## Chain 32 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.42344097  0.63279830
+## Lag 2000  0.04982331  0.36912309
+## Lag 3000 -0.07550406  0.04451466
+## Lag 4000  0.02587994 -0.16697765
+## Lag 5000  0.04131347 -0.32642232
+## Chain 33 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.68536562  0.69958560
+## Lag 2000  0.27568155  0.36070461
+## Lag 3000  0.04040239  0.02827698
+## Lag 4000 -0.19562880 -0.18382380
+## Lag 5000 -0.34193987 -0.36577876
+## Chain 34 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.50839914  0.50681690
+## Lag 2000  0.21354600  0.05720358
+## Lag 3000  0.04223815 -0.04337481
+## Lag 4000 -0.18008797 -0.07083645
+## Lag 5000 -0.31772998 -0.08321183
+## Chain 35 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.499954184  0.62660850
+## Lag 2000  0.185700073  0.30881619
+## Lag 3000 -0.009150173  0.05663278
+## Lag 4000 -0.217077704 -0.12639299
+## Lag 5000 -0.344244162 -0.28661470
+## Chain 36 
+##                edges   triangle
+## Lag 0     1.00000000  1.0000000
+## Lag 1000 -0.04988202  0.6060424
+## Lag 2000 -0.53730307  0.3164335
+## Lag 3000 -0.17900271  0.1147662
+## Lag 4000  0.15400097 -0.1847407
+## Lag 5000  0.20655493 -0.3339054
+## Chain 37 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6175530  0.63225761
+## Lag 2000  0.3500911  0.27408778
+## Lag 3000  0.1017933  0.04432226
+## Lag 4000 -0.2445188 -0.27540636
+## Lag 5000 -0.3975500 -0.35122906
+## Chain 38 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.55786845  0.66124747
+## Lag 2000  0.22259542  0.34960778
+## Lag 3000  0.03419583  0.07889562
+## Lag 4000 -0.08026944 -0.21056934
+## Lag 5000 -0.22143897 -0.36618015
+## Chain 39 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.43378642  0.64382389
+## Lag 2000  0.26407177  0.31336395
+## Lag 3000  0.05625872  0.07836578
+## Lag 4000 -0.07864936 -0.17733878
+## Lag 5000 -0.16772708 -0.36093953
+## Chain 40 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.6336806  0.56309032
+## Lag 2000  0.2088294  0.31604996
+## Lag 3000 -0.1227679  0.06868489
+## Lag 4000 -0.2326389 -0.14874783
+## Lag 5000 -0.3561508 -0.29131805
+## Chain 41 
+##               edges   triangle
+## Lag 0     1.0000000  1.0000000
+## Lag 1000  0.5641588  0.6221187
+## Lag 2000  0.3146968  0.3322952
+## Lag 3000  0.1581561  0.1027761
+## Lag 4000 -0.1866108 -0.1726466
+## Lag 5000 -0.3974922 -0.3333163
+## Chain 42 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5149848  0.71289723
+## Lag 2000  0.1976544  0.41517206
+## Lag 3000 -0.1038823  0.04565877
+## Lag 4000 -0.2522279 -0.28481367
+## Lag 5000 -0.2352933 -0.43750429
+## Chain 43 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.29457844  0.60225368
+## Lag 2000 -0.07658215  0.37243110
+## Lag 3000 -0.22047001  0.03958832
+## Lag 4000 -0.40733869 -0.16282651
+## Lag 5000 -0.03607504 -0.31091727
+## Chain 44 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.21368537  0.62590005
+## Lag 2000  0.11519252  0.36428462
+## Lag 3000  0.21749175  0.09231972
+## Lag 4000 -0.07327833 -0.18104268
+## Lag 5000 -0.29988999 -0.35494293
+## Chain 45 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.59030195  0.48948654
+## Lag 2000  0.25660762  0.22002820
+## Lag 3000  0.05650963 -0.02556070
+## Lag 4000 -0.08862587 -0.06758631
+## Lag 5000 -0.23465099 -0.15528951
+## Chain 46 
+##                 edges    triangle
+## Lag 0     1.000000000  1.00000000
+## Lag 1000  0.639966273  0.62062300
+## Lag 2000  0.282251265  0.36912791
+## Lag 3000 -0.008010118  0.06986511
+## Lag 4000 -0.130691400 -0.25700423
+## Lag 5000 -0.255691400 -0.40428114
+## Chain 47 
+##                edges    triangle
+## Lag 0     1.00000000  1.00000000
+## Lag 1000  0.49127400  0.55661236
+## Lag 2000 -0.10122164  0.22416590
+## Lag 3000 -0.15881326  0.05352921
+## Lag 4000  0.04712042 -0.13881000
+## Lag 5000 -0.06980803 -0.28348431
+## Chain 48 
+##               edges    triangle
+## Lag 0     1.0000000  1.00000000
+## Lag 1000  0.5250000  0.70202045
+## Lag 2000  0.3765625  0.37219222
+## Lag 3000  0.0828125  0.07170431
+## Lag 4000 -0.1671875 -0.22140711
+## Lag 5000 -0.3281250 -0.38950184
+## 
+## Sample statistics burn-in diagnostic (Geweke):
+</code></pre>
+
+<pre><code>## Error in ar.yw.default(x, aic = aic, order.max = order.max, na.action = na.action, : &#39;order.max&#39; must be &gt;= 1
+</code></pre>
+
+<pre><code class="r">dev.off()
+</code></pre>
+
+<pre><code>## png 
+##   2
+</code></pre>
+
+<p>Non-degenerate dyadic dependence models</p>
+
+<p>We explore clustering using GWESP (geometrically weighted edgewise shared partner) statistic,
+one of the more recently proposed statistics that is closely related to the triangle (Snijders et al. (2006);
+Robins, Snijders, Wang, Handcock, and Pattison (2007b) or Hunter (2007)). 
+The lower the value of the scaling parameter of GWESP, the less likely the model is to be degenerate.</p>
+
+<pre><code class="r"># mod4.f &lt;- formula(mnet3.simple ~ edges + gwesp(0, fixed = TRUE) + nodecov(&quot;timesCited&quot;) + 
+#                          nodecov(&quot;numPub&quot;) + nodematch(&quot;community&quot;) + nodefactor(&quot;community&quot;))
+# t0 &lt;- Sys.time()
+# mod4&lt;- ergm(mod4.f, verbose = TRUE, control = control.ergm(MCMLE.maxit=100, MCMC.samplesize = 1000,
+#                                                            MCMC.interval = 1000, seed=25))
+# Sys.time() - t0
+# mod4
+</code></pre>
+
+<pre><code class="r"># mcmc.diagnostics(mod4)
+</code></pre>
+
+<pre><code class="r"># pdf(&quot;./figure2/mod4diagnostics.pdf&quot;)
+# mcmc.diagnostics(mod4)
+# dev.off()
+</code></pre>
+
+<p>Now let&#39;s see if model 4 does a better job than mnet3.ergm.fit2</p>
+
+<pre><code class="r"># sim2 &lt;- simulate(mod4, nsim = 100,
+#                  # burnin = 1e+6, # we may set the number of steps in the simulation chain to 1e+06
+#                  verbose = TRUE, seed = 25)
+</code></pre>
+
+<p>Let&#39;s assess how does the distribution of triangles in mod4 compare to the original network:</p>
+
+<pre><code class="r"># mod4.tridist &lt;- sapply(sim2$networks, function(x) summary(x ~ triangle))
+# hist(mod4.tridist)
+# mnet3.tri &lt;- summary(mnet3.simple ~ triangle)
+# arrows(mnet3.tri, 20, mnet3.tri, 5, col = &quot;red&quot;, lwd = 3)
+# sum(fmh.tri &lt;= model4.tridist)
+</code></pre>
+
+<pre><code class="r"># gof4.deg &lt;- gof(mod4 ~ degree, verbose = TRUE)
+# plot(gof4.deg)
+</code></pre>
+
+<pre><code class="r"># gof4.deg
+</code></pre>
+
+<pre><code class="r"># pdf(&quot;./figure2/gof4-deg.pdf&quot;)
+# plot(gof4.deg)
+# dev.off()
+</code></pre>
+
+<p>Let us now compare our model fit to our data on degree distribution</p>
+
+<pre><code class="r"># t0 &lt;- Sys.time()
+# diag &lt;- gof(my.ergm.bern.fit, control=control.gof.ergm(parallel=cores, parallel.type=&quot;PSOCK&quot;))
+# Sys.time() - t0
+#save(diag, file = &#39;./Rdata/diag.my.ergm.bern.fit.rda&#39;)
+</code></pre>
+
+<pre><code class="r">#par(mfrow=c(2, 2))
+#plot(diag)
+</code></pre>
+
+</body>
+
+</html>

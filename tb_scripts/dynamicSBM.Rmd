@@ -1,0 +1,99 @@
+---
+title: "Social Network Analysis of the Malaria Co-authorship network from Benin"
+output: html_notebook
+author: "Roseric Azondekon"
+---
+$\\$
+$\\$
+
+This project is part of my PhD dissertation project.
+
+This section follows from the first section dedicated to the Stochastic Block Modeling of our co-authorship network (available [HERE](http://#)).
+
+In this section, we apply Dynamic Stochastic Block Modeling to our data.
+
+Loading required packages...
+```{r}
+library(mixer)
+library(igraph)
+library(doParallel)
+library(parallel)
+```
+
+Setting Working directory and setting seeds...
+```{r}
+setwd('~/R/R_scripts')
+set.seed(123)
+```
+
+Preparing Temporal network data...
+```{r}
+# Loading a simplified version of the network
+mnet <- read_graph('./graphs/CAnet.graphml', format = 'graphml')
+
+# mnet2.96.01 <- read_graph('./graphs/CAnet_96_01s.graphml', format = 'graphml')
+# mnet2.02.06 <- read_graph('./graphs/CAnet_02_06s.graphml', format = 'graphml')
+# mnet2.07.11 <- read_graph('./graphs/CAnet_07_11s.graphml', format = 'graphml')
+# mnet2.12.16 <- read_graph('./graphs/CAnet_12_16s.graphml', format = 'graphml')
+```
+
+
+```{r}
+# Aggregating network by time periods
+# mnet2.96.01 <- subgraph.edges(mnet,which(E(mnet)$year<=2001), delete.vertices = F)
+mnet2.96.01 <- subgraph.edges(mnet,which(E(mnet)$year<=2001), delete.vertices = F)
+
+
+mnet2.02.06 <- subgraph.edges(mnet,which(E(mnet)$year<=2006 & E(mnet)$year>=2002), delete.vertices = F)
+
+
+mnet2.07.11 <- subgraph.edges(mnet,which(E(mnet)$year<=2011 & E(mnet)$year>=2007), delete.vertices = F)
+
+
+mnet2.12.16 <- subgraph.edges(mnet,which(E(mnet)$year>=2012), delete.vertices = F)
+
+
+V(mnet2.96.01)$name <- as.character(1:vcount(mnet2.96.01))
+V(mnet2.02.06)$name <- as.character(1:vcount(mnet2.96.01))
+V(mnet2.07.11)$name <- as.character(1:vcount(mnet2.96.01))
+V(mnet2.12.16)$name <- as.character(1:vcount(mnet2.96.01))
+
+list.mnet <- list(mnet2.96.01, mnet2.02.06, mnet2.07.11, mnet2.12.16)
+```
+
+```{r}
+E(mnet)$weight <- 1
+mnets <- simplify(mnet, edge.attr.comb = list(weight="sum"))
+```
+
+
+Converting to array of adjacency matrices
+```{r,warning=FALSE}
+# converting to R array
+all.vertices.name <- unique(sort(sapply(list.mnet, function(g) V(g)$name)))
+T <- length(list.mnet)
+N <- length(all.vertices.name)
+Y <- array(dim=c(T,N,N))
+for (t in 1:T){
+   g.tmp <- graph.empty(n=N, directed=F)
+   V(g.tmp)$name <- all.vertices.name
+   Y[t,,] <- as.matrix(get.adjacency(str(g.tmp %u% list.mnet[[t]]), sparse = F))
+}
+```
+
+
+Fitting Dynamic SBM...
+```{r}
+# dynSBM
+t0 <- Sys.time()
+list.dynsbm <- select.dynsbm(Y, Qmin=2, Qmax=5, edge.type="binary", nstart = 1)
+Sys.time() - t0
+dynsbm <- list.dynsbm[[2]]
+# Connectivity Plot
+connectivity.plot(dynsbm, Y)
+```
+
+```{r}
+p<-alluvial.plot(dynsbm)
+```
+

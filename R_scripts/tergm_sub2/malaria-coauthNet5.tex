@@ -1,0 +1,28 @@
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l D{)}{)}{12)3} D{)}{)}{12)3} D{)}{)}{12)3} D{)}{)}{12)3} }
+\toprule
+ & \multicolumn{1}{c}{Model~2a} & \multicolumn{1}{c}{Model~2b} & \multicolumn{1}{c}{Model~2c} & \multicolumn{1}{c}{Model~2d} \\
+\midrule
+edges                   & -4.66 \; (0.00)^{***} & -10.14 \; (0.02)^{***} & -10.45 \; (0.02)^{***} & -8.65 \; (0.05)^{***} \\
+nodecov.timesCited      &                       & -0.03 \; (0.00)^{***}  & -0.02 \; (0.00)^{***}  & -0.03 \; (0.00)^{***} \\
+nodecov.degree          &                       & 0.03 \; (0.00)^{***}   & 0.03 \; (0.00)^{***}   & 0.03 \; (0.00)^{***}  \\
+nodecov.numPub          &                       & 0.45 \; (0.00)^{***}   & 0.46 \; (0.00)^{***}   & 0.45 \; (0.00)^{***}  \\
+nodematch.community     &                       & 4.96 \; (0.02)^{***}   & 5.06 \; (0.02)^{***}   & 4.79 \; (0.02)^{***}  \\
+nodematch.collab        &                       & 0.44 \; (0.01)^{***}   & 0.56 \; (0.01)^{***}   & 0.54 \; (0.01)^{***}  \\
+nodefactor.collabType.2 &                       &                        & -0.10 \; (0.02)^{***}  & 0.01 \; (0.02)        \\
+nodefactor.collabType.3 &                       &                        & 0.55 \; (0.01)^{***}   & 0.60 \; (0.01)^{***}  \\
+edgecov.memory          &                       &                        &                        & 1.07 \; (0.01)^{***}  \\
+edgecov.timecov1        &                       &                        &                        & -0.18 \; (0.01)^{***} \\
+\midrule
+AIC                     & 94681197.61           & 93740510.46            & 93737596.32            & 67005815.91           \\
+BIC                     & 94681229.97           & 93740623.73            & 93737741.94            & 67005990.51           \\
+Log Likelihood          & -47340596.80          & -46870248.23           & -46868789.16           & -33502896.96          \\
+\bottomrule
+\multicolumn{5}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
+\end{tabular}
+\caption{Temporal ERGM of Malaria Co-authorship Network.}
+\label{tab:tergm}
+\end{center}
+\end{table}

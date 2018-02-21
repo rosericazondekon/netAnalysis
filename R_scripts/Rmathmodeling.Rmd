@@ -1,0 +1,240 @@
+---
+title: "Social Network Analysis of the Malaria Co-authorship network from Benin"
+output: html_notebook
+author: "Roseric Azondekon"
+---
+$\\$
+$\\$
+
+This project is part of my PhD dissertation project.
+
+This section follows from the first section dedicated to the Descriptive Analysis of our co-authorship network (available [HERE](http://rpubs.com/rosericazondekon/descstat)).
+
+The purpose of this section is the use of mathematical models to describe our malaria co-authorship network.
+
+According to Kolaczyk and Csardi (2009), a model for a network graph is a collection of possible graphs $\mathscr{G}$ with a probability distribution $\mathbb{P}_\theta$ defined as:
+$$\{ \mathbb{P}_\theta\ (G), G \in \mathscr{G} : \theta \in \Theta \}$$
+where $\theta$ is a vector of parameters ranging over values in $\Theta$.
+
+The use of network models is to test significance of the characteristics of our co-authorship network and unravel the mechanisms underlying the observed structure of our malaria co-authorship network. It is important to note that mathematical models tend to be simpler than statistical models (which will be next) and easier for mathematical analysis. But in contrast to statistical models, they do not permit model fitting and assessment.
+
+They are different mathematical models for network graphs:
+
+- **Classical Random Graph Models**: First established by Erdos and Renyi  ([ref](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.348.530&rep=rep1&type=pdf)), it specifies a collection of graphs $\mathscr{G}$ with a uniform probability $\mathbb{P}(\cdot)$ over $\mathscr{G}$. A variant of this model called the *Bernoulli Random Graph Model* was also defined by Gilbert ([ref](http://socresonline.org.uk/2/2/3.html)).
+
+- **Generalized Random Graph Models**: These models emanated from the generalization of Erdos and Renyi's formulation, defining a collection of graphs $\mathscr{G}$ with prespecified degree sequence.
+
+- **Mechanistic Network Graph Models**: These models mimic real-world phenomena and include **Small-World Models** often referred to as "six degree separation". It was introduced by Watts and Strogatz ([ref](http://www.nature.com/nature/journal/v393/n6684/abs/393440a0.html)) and have since received a lot of interests in the existing literature. Small-world networks usually exhibit high levels of clustering and small distances between nodes. Classical models are not fit to better represent such behaviors since they usually display low levels of clustering and small distance between nodes. Examples of known small-world networks include the *network of connected proteins* or the *transcriptional networks* of genes. A variant of Small-World models is the **Preferential Attachment Models** defined based on the popular principle of "the rich get richer". Preferential attachment models gained fascination after the work of Barabasi and Albert  ([ref](http://science.sciencemag.org/content/286/5439/509)) who studied the growth of the World Wide Web. Examples of Preferential Attachment networks include that of World Wide Web and the scientific citation network. An important characteristic of these models is that as time tend to infinity, there degree distribution tend to follow a power law.
+
+Now that we have defined the main mathematical models for Network modeling, let's use *Monte Carlo* based simulations methods to assess the significance of our network characteristics.
+
+**Definition:** Given an observed graph $G^{obs}$ and some structural characteristics $\eta (\cdot)$. Our goal is to assess if $\eta (G^{obs})$ is unusal i.e is significant. We then compare $\eta (G^{obs})$ to collection of values $\{\eta(G):G \in \mathscr{G}\}$. If $\eta (G^{obs})$ is too extreme with respect to this collection, then we have enough evidence to assert that $\eta (G^{obs})$ is not a uniform draw from $\mathscr{G}$.
+
+Let's recall that our hierarchical clustering method of community detection algorithm has identified 23 different clusters/communities in our co-authorship network out of which 7 form a giant component ([ref. Descriptive Analysis](http://rpubs.com/rosericazondekon/descstat)). The question of interest here is whether the number of communities detected is unexpected or not. Let's use Monte Carlo simulations to test the significance of this observed characteristics on our malaria co-authorship network. Let's also test the significance of other characteristics such as the clustering coefficient and the average shortest path length.
+We run *1000* Monte-Carlo simulations on all the above described models, assess significance and small-world properties based on the results.
+
+**Attention:** Given the size of our network, the simulations are expected to last several hours to complete. We trace the processing time on our computer, a 16GB 12-core CPU and 2-core GPU powered desktop. We decide to parallelize the processing in order to speed-up the processing.
+
+We first load the list of the igraph objects we saved from our previous tutorial:
+```{r,error=FALSE,warning=FALSE}
+load('./Rdata/mnet.rda')
+load('./Rdata/mnet2.rda')
+load('./Rdata/mnet2.gc.rda')
+load('./Rdata/auth_data.rda')
+load('./Rdata/edges.rda')
+```
+$\\$
+
+Loading required packages:
+```{r,error=FALSE,warning=FALSE}
+library(igraph)
+library(foreach)
+library(doParallel)
+library(lubridate)
+```
+$\\$
+
+Let's first set up parallel backend
+```{r}
+cores=detectCores() # get number of cores=12
+cl <- makeCluster(cores[1]-2) #I decide to run leave 2 cores out
+registerDoParallel(cl)
+```
+
+
+```{r}
+nv <- vcount(mnet2) # number of vertices in mnet2
+ne <- ecount(mnet2) # number of edges in mnet2
+degs <- degree(mnet2) # degree distribution in mnet2
+# For the small-world properties we estimate the probability and the average neighborhood size from the observed network
+p <- ne / (ne * (ne -1)) # Estimated probability
+r <- mean(neighborhood.size(mnet2, 1)) # Estimated average neighborhood size
+
+# 1000 trials
+ntrials <- 1000
+
+# Defining function to combine results
+comb <- function(x, ...) {
+  lapply(seq_along(x),
+    function(i) c(x[[i]], lapply(list(...), function(y) y[[i]])))
+}
+
+start.time <- Sys.time() # Capturing Parallel Computing processing start time
+results <- foreach(1:ntrials, .combine='comb', .multicombine=TRUE,
+                   .init=list(list(),list(),list(),list(),list(),list(),
+                              list(),list(),list(),list(),list(),list())) %dopar% {
+  library(igraph)
+  # Erdos-Renyi RGM
+  g.rg <- erdos.renyi.game(nv, ne, type="gnm")
+  c.rg <- fastgreedy.community(g.rg)
+  # num.comm.rg[i] <- length(c.rg)
+  # av.path.len.rg[i] <- average.path.length(g.rg, directed = F)
+  # av.clus.rg[i] <- transitivity(g.rg)
+  num.comm.rg <- length(c.rg)
+  av.path.len.rg <- average.path.length(g.rg, directed = F)
+  av.clus.rg <- transitivity(g.rg)
+  
+  # Generalized RGM
+  g.grg <- degree.sequence.game(degs, method="vl")
+  c.grg <- fastgreedy.community(g.grg)
+  num.comm.grg <- length(c.grg)
+  av.path.len.grg <- average.path.length(g.grg, directed = F)
+  av.clus.grg <- transitivity(g.grg)
+  
+  # Watts and Strogatz small-world Model
+  g.ws <- watts.strogatz.game(1, nv, r, p)
+  c.ws <- fastgreedy.community(g.ws)
+  num.comm.ws <- length(c.ws)
+  av.path.len.ws <- average.path.length(g.ws, directed = F)
+  av.clus.ws <- transitivity(g.ws)
+  
+  # Barabasi-Albert Preferential Attachement Model
+  g.ba <- barabasi.game(nv, directed = FALSE)
+  c.ba <- fastgreedy.community(g.ba)
+  num.comm.ba <- length(c.ba)
+  av.path.len.ba <- average.path.length(g.ba, directed = F)
+  av.clus.ba <- transitivity(g.ba)
+  
+  list(
+    num.comm.rg, av.path.len.rg, av.clus.rg,
+    num.comm.grg, av.path.len.grg, av.clus.grg,
+    num.comm.ws, av.path.len.ws, av.clus.ws,
+    num.comm.ba, av.path.len.ba, av.clus.ba
+  )
+}
+stopCluster(cl) # Stop cluster
+end.time <- Sys.time() # Capturing Parallel Computing processing end time
+time.taken <- end.time - start.time
+time.taken
+```
+
+
+Let's now reassign each element of the results to a variable:
+```{r}
+num.comm.rg <- unlist(results[[1]]);
+av.path.len.rg <- unlist(results[[2]])
+av.clus.rg <- unlist(results[[3]])
+num.comm.grg <- unlist(results[[4]])
+av.path.len.grg <- unlist(results[[5]])
+av.clus.grg <- unlist(results[[6]])
+num.comm.ws <- unlist(results[[7]])
+av.path.len.ws <- unlist(results[[8]])
+av.clus.ws <- unlist(results[[9]])
+num.comm.ba <- unlist(results[[10]])
+av.path.len.ba <- unlist(results[[11]])
+av.clus.ba <- unlist(results[[12]])
+```
+
+Let's visualize the results:
+
+Number of detected communities for the random graph models
+```{r}
+# Barplot of the number of communities for the Random Models
+rslts <- c(num.comm.rg,num.comm.grg)
+indx <- c(rep(0, ntrials), rep(1, ntrials))
+counts <- table(indx, rslts)/ntrials
+barplot(counts, beside=TRUE, col=c("blue", "red"),
+        xlab="Number of Communities", 
+        ylab="Relative Frequency",
+        legend=c("Fixed Size", "Fixed Degree Sequence"))
+```
+
+Let's recall that our hierarchical clustering algorithm detected 23 communities in our co-authorship network. The graph above clearly demonstrates that the number of communities detected would be considered unusual from the perspective of both Classical random graphs and generalized random graphs.
+
+This can be further quantified by a one-sample t-test comparing the observed number of communities to the mean number of communities from the Monte-Carlo simulations. Given that t-test assumes normality of the data, a simple histogram or a test of normality (Ryan-Joiner, Kolmogorov-Smirnov tests) may be performed although any simulation output from the random graphs simulation would be expected to follow a normal distribution. The following code may help get a p-value or a confidence interval to boldly claim the sufficient evidence that the observed number of communities is extreme or unexpected per the random graph models:
+
+```{r}
+t.test(num.comm.rg, mu=23)
+t.test(num.comm.grg, mu=23)
+```
+As you can see from the output, p-value < 0.0001 and the 95% CIs for both random graph models do not contain 23. We therefore have over 99% certitude that the observed number of communities is extreme per the random graph models.
+
+
+Number of detected communities for the small-world models
+```{r}
+# Barplot of the number of communities for the Random Models
+rslts <- c(num.comm.ws,num.comm.ba)
+indx <- c(rep(0, ntrials), rep(1, ntrials))
+counts <- table(indx, rslts)/ntrials
+barplot(counts, beside=TRUE, col=c("blue", "red"),
+        xlab="Number of Communities", 
+        ylab="Relative Frequency",
+        legend=c("Watts-Strogatz SW", "Barbasi-Albert PA"))
+```
+
+Supprisingly enough, the observed number of communities is also extreme per both small-world models. This suggests that the obsrved graph may not be a small-world. But we cannot reach a definitive answer before looking at the average clustering and the average shortes-path length.
+$\\$
+
+Summarizing the resulting distribution of clustering coefficient:
+```{r}
+summary(av.clus.rg)
+```
+```{r}
+summary(av.clus.grg)
+```
+The two above summaries confirm that the clustering is significantly different from what would be seen had the observed graph been a random graph (t-test displays p-value < 0.0001)
+
+```{r}
+summary(av.clus.ws)
+```
+```{r}
+summary(av.clus.ba)
+```
+Recall the clustering coefficient for our network is `r I(transitivity(mnet2))`
+
+Supprisingly, there is substantially more clustering in our malaria co-authorship network than expected from both the random graph models and the two small-world models (t.test displays p-value < 0.0001).
+
+
+Summarizing the resulting distribution of average path length:
+```{r}
+summary(av.path.len.rg)
+```
+```{r}
+summary(av.path.len.grg)
+```
+```{r}
+summary(av.path.len.ws)
+```
+```{r}
+summary(av.path.len.ba)
+```
+Recall the clustering coefficient for our network is `r I(average.path.length(mnet2))`
+
+With respect to the average shortest-path length, the observed shortest-path length is significantly larger than what is expected from the random graph models (t.test p-value < 0.0001) and significantly lower than what is expected from the small-world models (t.test p-value < 0.0001).
+
+**CONCLUSION:** This analysis disproves the evidence for small-world behavior suspected in our previous tutorial. Our observed malaria co-authorship network has some behaviors that the mathematical graph models explored in this tutorial cannot explain. We therefore suggest the application of other models such as Statistical models for Network Graphs to better explain the observed malaria co-authorship network. This will be the focus of our next tutorial.
+$\\$
+
+
+**NOTICE:** We repeat this analysis with the giant component of our co-authorship network and reach the same general conclusion. The reader might want to repeat this analysis on his own.
+$\\$
+
+Let's save the output from the Monte-Carlo simulations for probable future use:
+```{r}
+save(results, file = './Rdata/results.rda')
+```
+$\\$
+
+
+
+**NEXT TUTORIAL:** Statistical Modeling for Network Graphs

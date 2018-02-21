@@ -1,0 +1,186 @@
+---
+title: "Social Network Analysis of the Malaria Co-authorship network from Benin"
+output: html_notebook
+author: "Roseric Azondekon"
+---
+$\\$
+$\\$
+
+This project is part of my PhD dissertation project.
+
+This section follows from the first section dedicated to the Mathematical Modeling of our co-authorship network (available [HERE](http://#)).
+
+The purpose of this section is the use of Exponential Random Graph Modeling (ERGM) as a  Statistical modeling to better understand and explain our malaria co-authorship network.
+
+Loading the necessary packages...
+```{r}
+setwd('~/R/R_scripts')
+library(igraph)
+library(ergm)
+library(parallel)
+library(doParallel)
+library(lubridate)
+# library(Rmpi)
+library(snow)
+library(methods)
+```
+
+Loading the variables from the last section...
+```{r}
+load('./Rdata/mnet.rda')
+load('./Rdata/mnet2.rda')
+load('./Rdata/mnet2.gc.rda')
+load('./Rdata/auth_data.rda')
+load('./Rdata/edges.rda')
+load('./Rdata/mnet2.gc.rda')
+
+# Loading a simplified version of the network
+mnet3 <- read_graph('./graphs/CAnet_graph.graphml', format = 'graphml')
+```
+
+Since this processing is going to take a lot of time, we decide to parallelize all the computations:
+```{r}
+# # create a cluster with fixed number of processes
+# np = detectCores()-2 # Detectin CPUs and leaving2 out
+# cluster <- makePSOCKcluster(np)
+
+cores=detectCores() # get number of cores
+cl <- makeCluster(cores[1]-2) #I decide to run leave 2 cores out
+registerDoParallel(cl)
+```
+
+```{r}
+A <- get.adjacency(mnet3)
+v.attrs <- get.data.frame(mnet3, what="vertices")
+
+v.attrs$name <- V(mnet2)$name
+v.attrs$timesCited <- V(mnet2)$timesCited
+v.attrs$numPub <- V(mnet2)$numPub
+v.attrs$community <- V(mnet2)$community
+v.attrs$degree <- V(mnet2)$degree
+v.attrs$affiliation <- V(mnet2)$place
+v.attrs$city <- V(mnet2)$affil
+v.attrs$country <- V(mnet2)$country
+```
+
+```{r}
+mnet3.simple <- network::as.network(as.matrix(A), directed=FALSE)
+network::set.vertex.attribute(mnet3.simple, "timesCited", V(mnet2)$timesCited)
+network::set.vertex.attribute(mnet3.simple, "numPub", V(mnet2)$numPub)
+network::set.vertex.attribute(mnet3.simple, "community", V(mnet2)$community)
+network::set.vertex.attribute(mnet3.simple, "degree", V(mnet2)$degree)
+```
+
+
+
+```{r}
+my.ergm.bern <- formula(mnet3.simple ~ edges)
+my.ergm.bern
+mnet3.simple ~ edges
+summary.statistics(my.ergm.bern)
+```
+
+```{r}
+t0 <- Sys.time()
+my.ergm.bern.fit <- ergm(my.ergm.bern, control=control.ergm(parallel=cores, parallel.type="PSOCK", MCMC.interval=1024*10,  MCMC.burnin=1024*16, MCMC.samplesize=1024*10))
+Sys.time() - t0
+```
+
+```{r}
+anova.ergm(my.ergm.bern.fit)
+```
+
+```{r}
+summary(my.ergm.bern.fit)
+```
+
+```{r}
+t0 <- Sys.time()
+diag <- gof(my.ergm.bern.fit, control=control.gof.ergm(parallel=cores, parallel.type="PSOCK", MCMC.interval=1024*10))
+Sys.time() - t0
+```
+
+```{r}
+# save(diag, file = './Rdata/diag.rda')
+```
+
+
+```{r,fig.width=20,fig.height=15}
+par(mfrow=c(1, 4))
+plot(diag) # Not a quite good fit.
+```
+
+
+
+```{r}
+my.ergm <- formula(mnet3.simple ~ edges + kstar(2) + kstar(3) + triangle)
+summary.statistics(my.ergm)
+```
+
+```{r}
+t0 = proc.time()
+my.ergm.fit <- ergm(my.ergm, control=control.ergm(parallel=cores, parallel.type="PSOCK", MCMC.interval=1024*10,  MCMC.burnin=MCMC.interval*16, MCMC.samplesize=1024*10))
+proc.time() - t0
+```
+
+```{r}
+anova.ergm(my.ergm.fit)
+summary(my.ergm.fit)
+```
+
+```{r}
+mcmc.diagnostics(my.ergm.fit) # to check for diagnostics
+```
+
+
+```{r}
+my.ergm <- formula(mnet3.simple ~ edges + gwesp(1, fixed=TRUE))
+summary.statistics(my.ergm)
+```
+
+```{r}
+mnet3.ergm <- formula(mnet3.simple ~ edges 
+                       + gwesp(log(3), fixed=TRUE)
+                       + nodemain("timesCited") 
+                       + nodemain("numPub")
+                       + nodemain("degree") 
+                       + match("community"))
+```
+
+```{r}
+t0 = proc.time()
+mnet3.ergm.fit <- ergm(mnet3.ergm, control=control.ergm(parallel=cores, parallel.type="PSOCK"))
+proc.time() - t0
+```
+
+```{r}
+mcmc.diagnostics(mnet3.ergm.fit) # to check for diagnostics
+```
+
+```{r}
+anova.ergm(mnet3.ergm.fit)
+```
+
+```{r}
+summary.ergm(mnet3.ergm.fit)
+```
+
+```{r}
+gof.mnet3.ergm <- gof(mnet3.ergm.fit,model=F)
+```
+
+```{r}
+plot(gof.mnet3.ergm)
+par(mfrow=c(1, 4))
+plot(gof.mnet3.ergm)
+```
+
+
+
+
+
+
+```{r}
+stopCluster(cl)
+```
+

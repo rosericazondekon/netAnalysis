@@ -1,0 +1,26 @@
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l D{)}{)}{11)3} D{)}{)}{11)3} D{)}{)}{11)3} }
+\toprule
+ & \multicolumn{1}{c}{Model~1} & \multicolumn{1}{c}{Model~2} & \multicolumn{1}{c}{Model~3} \\
+\midrule
+edges                          & -3.48 \; (0.02)^{***} & -7.51 \; (0.06)^{***} & -7.55 \; (0.07)^{***} \\
+nodecov.timesCited             &                       & 0.00 \; (0.00)^{***}  & 0.00 \; (0.00)^{***}  \\
+nodecov.degree                 &                       & 0.08 \; (0.00)^{***}  & 0.08 \; (0.00)^{***}  \\
+nodecov.numPub                 &                       & -0.29 \; (0.01)^{***} & -0.28 \; (0.01)^{***} \\
+nodematch.communitySBM         &                       & 5.01 \; (0.05)^{***}  & 5.02 \; (0.05)^{***}  \\
+nodematch.collabType           &                       & 0.77 \; (0.05)^{***}  & 0.72 \; (0.05)^{***}  \\
+nodefactor.collabType.NATIONAL &                       &                       & -0.05 \; (0.04)       \\
+nodefactor.collabType.REGIONAL &                       &                       & 0.21 \; (0.03)^{***}  \\
+\midrule
+AIC                            & 35668.54              & 18956.20              & 18912.74              \\
+BIC                            & 35678.34              & 19014.98              & 18991.12              \\
+Log Likelihood                 & -17833.27             & -9472.10              & -9448.37              \\
+\bottomrule
+\multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$, $^{**}p<0.01$, $^*p<0.05$}}
+\end{tabular}
+\caption{ERGM of the HIV/AIDS Co-authorship Network.}
+\label{tab:tergm}
+\end{center}
+\end{table}

@@ -1,0 +1,403 @@
+
+R version 3.2.3 (2015-12-10) -- "Wooden Christmas-Tree"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #' This project is part of my PhD dissertation project.
+> #' This section follows from the first section dedicated to the Mathematical Modeling of our co-authorship network (available [HERE](http://#)).
+> #'
+> #' The purpose of this section is the use of Exponential Random Graph Modeling (ERGM) as a  Statistical modeling to better understand and explain our malaria co-authorship network.
+> #' Loading the necessary packages...
+> 
+> #+ setup, include=FALSE,cache=FALSE
+> setwd('~/R/R_scripts')
+> library(igraph)
+
+Attaching package: ‘igraph’
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+> library(ergm)
+Loading required package: statnet.common
+Loading required package: network
+network: Classes for Relational Data
+Version 1.13.0 created on 2015-08-31.
+copyright (c) 2005, Carter T. Butts, University of California-Irvine
+                    Mark S. Handcock, University of California -- Los Angeles
+                    David R. Hunter, Penn State University
+                    Martina Morris, University of Washington
+                    Skye Bender-deMoll, University of Washington
+ For citation information, type citation("network").
+ Type help("network-package") to get started.
+
+
+Attaching package: ‘network’
+
+The following objects are masked from ‘package:igraph’:
+
+    add.edges, add.vertices, %c%, delete.edges, delete.vertices,
+    get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+    is.directed, list.edge.attributes, list.vertex.attributes, %s%,
+    set.edge.attribute, set.vertex.attribute
+
+
+ergm: version 3.7.1, created on 2017-03-20
+Copyright (c) 2017, Mark S. Handcock, University of California -- Los Angeles
+                    David R. Hunter, Penn State University
+                    Carter T. Butts, University of California -- Irvine
+                    Steven M. Goodreau, University of Washington
+                    Pavel N. Krivitsky, University of Wollongong
+                    Martina Morris, University of Washington
+                    with contributions from
+                    Li Wang
+                    Kirk Li, University of Washington
+                    Skye Bender-deMoll, University of Washington
+Based on "statnet" project software (statnet.org).
+For license and citation information see statnet.org/attribution
+or type citation("ergm").
+
+NOTE: Versions before 3.6.1 had a bug in the implementation of the bd()
+constriant which distorted the sampled distribution somewhat. In
+addition, Sampson's Monks datasets had mislabeled verteces. See the
+NEWS and the documentation for more details.
+
+> library(parallel)
+> library(doParallel)
+Loading required package: foreach
+Loading required package: iterators
+> library(lubridate)
+
+Attaching package: ‘lubridate’
+
+The following object is masked from ‘package:igraph’:
+
+    %--%
+
+The following object is masked from ‘package:base’:
+
+    date
+
+> #/* library(Rmpi) */
+> library(snow)
+
+Attaching package: ‘snow’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, clusterSplit, makeCluster, parApply,
+    parCapply, parLapply, parRapply, parSapply, splitIndices,
+    stopCluster
+
+> library(methods)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:lubridate’:
+
+    intersect, setdiff, union
+
+The following objects are masked from ‘package:igraph’:
+
+    %>%, as_data_frame, groups, union
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(stringr)
+
+Attaching package: ‘stringr’
+
+The following object is masked from ‘package:igraph’:
+
+    %>%
+
+> 
+> #' Loading the variables from the last section...
+> 
+> #+ var-load,cache=FALSE
+> load('./Rdata/mnet.rda')
+> load('./Rdata/mnet2.rda')
+> load('./Rdata/mnet2.gc.rda')
+> load('./Rdata/auth_data.rda')
+> load('./Rdata/edges.rda')
+> load('./Rdata/mnet2.gc.rda')
+> 
+> # /* Loading a simplified version of the network */
+> mnet3 <- read_graph('./graphs/CAnet_graph.graphml', format = 'graphml')
+> mnet.w <- read_graph('./graphs/CAnet_weight.graphml', format = 'graphml')
+> 
+> #' Some data manipulations: Defining Local, Regional and International actors
+> #+ manip, cahce=FALSE
+> newCountry<-V(mnet2)$country %>% str_replace("\n", "")
+> V(mnet2)$country<-newCountry
+> cont<-read.csv("continent.csv", header = T)
+> continent<-list()
+> ctnt<-as.vector(cont$Continent)
+> ctry<-as.vector(cont$Country)
+> for(i in 1:length(ctnt)){
++   continent[[toupper(ctry[i])]]<-toupper(ctnt[i])
++ }
+> # V(mnet2)$continent<-numeric(length(V(mnet)$country))
+> newContinent<-c()
+> for(i in 1:length(V(mnet2)$country)){
++   entry<-continent[[V(mnet2)$country[i]]]
++   if(is.null(entry)){entry<-''}
++   newContinent<-c(newContinent, entry)
++ }
+> V(mnet2)$continent<-newContinent
+> 
+> # Assigning collaboration scope
+> collabType<-c()
+> for(i in 1:length(V(mnet2)$continent)){
++   collabScope=''
++   if(V(mnet2)$country[i]=='BENIN' && V(mnet2)$continent[i]=='AFRICA'){
++     collabScope<-'NATIONAL'
++   } else if(V(mnet2)$country[i]!='BENIN' && V(mnet2)$continent[i]=='AFRICA'){
++     collabScope<-'REGIONAL'
++   } else if(V(mnet2)$continent[i]!='AFRICA' && V(mnet2)$continent[i]!='') {
++     collabScope<-'INTERNATIONAL'
++   } else{
++     collabScope<-NA
++   }
++   collabType<-c(collabType,collabScope)
++ }
+> V(mnet2)$collabType<-collabType
+> 
+> 
+> #' Since this processing is going to take a lot of time, we decide to parallelize all the computations:
+> #+ detect-cores
+> # /* create a cluster with fixed number of processes */
+> cores=detectCores() # get number of cores
+> # cl <- makeCluster(cores[1]-2) #I decide to run leave 2 cores out
+> # registerDoParallel(cl)
+> #'
+> #+ preproc,cache=FALSE
+> A <- get.adjacency(mnet3)
+> v.attrs <- get.data.frame(mnet3, what="vertices")
+> v.attrs$name <- V(mnet.w)$name
+> v.attrs$timesCited <- V(mnet.w)$timesCited
+> v.attrs$numPub <- V(mnet.w)$numPub
+> v.attrs$community <- V(mnet2)$community
+> v.attrs$degree <- V(mnet2)$degree
+> v.attrs$affiliation <- V(mnet.w)$place
+> v.attrs$city <- V(mnet.w)$affil
+> v.attrs$country <- V(mnet.w)$country
+> v.attrs$collabType <- V(mnet2)$collabType
+> 
+> 
+> mnet3.simple <- network::as.network(as.matrix(A), directed=FALSE)
+> network::set.vertex.attribute(mnet3.simple, "timesCited", V(mnet.w)$timesCited)
+> network::set.vertex.attribute(mnet3.simple, "numPub", V(mnet.w)$numPub)
+> network::set.vertex.attribute(mnet3.simple, "community", V(mnet2)$community)
+> network::set.vertex.attribute(mnet3.simple, "degree", V(mnet2)$degree)
+> network::set.vertex.attribute(mnet3.simple, "collabType", V(mnet2)$collabType)
+> 
+> # pairCited <- get.adjacency(mnet2,attr = 'timesCited')
+> # nCollab <- as_adjacency_matrix(mnet2,attr = 'weight')
+> # 
+> # # Adding edge attributes
+> # mnet3.simple %e% 'pairCited' <- A
+> # mnet3.simple %e% 'nCollab' <- nCollab
+> mnet3.simple
+ Network attributes:
+  vertices = 1792 
+  directed = FALSE 
+  hyper = FALSE 
+  loops = FALSE 
+  multiple = FALSE 
+  bipartite = FALSE 
+  total edges= 95707 
+    missing edges= 0 
+    non-missing edges= 95707 
+
+ Vertex attribute names: 
+    collabType community degree numPub timesCited vertex.names 
+
+ Edge attribute names not shown 
+> #'
+> #+ formula1
+> model1.f <- formula(mnet3.simple ~ edges + triangle + twopath)
+> model1.f
+mnet3.simple ~ edges + triangle + twopath
+> 
+> summary.statistics(model1.f)
+   edges triangle  twopath 
+   95707  9074443 28224895 
+> #'
+> #+ model-fitting1,cache=FALSE
+> t0 <- Sys.time()
+> model1 <- ergm(model1.f, iterations=1000, 
++                          control=control.ergm(parallel=cores, parallel.type="PSOCK", MCMC.samplesize=1000,
++                                               MCMC.interval=500, MCMLE.maxit = 1000, MCMC.burnin = 20000, seed=25))
+Starting maximum likelihood estimation via MCMLE:
+Iteration 1 of at most 1000: 
+The log-likelihood improved by 2.139 
+Iteration 2 of at most 1000: 
+The log-likelihood improved by 3.069 
+Iteration 3 of at most 1000: 
+The log-likelihood improved by 2.423 
+Iteration 4 of at most 1000: 
+The log-likelihood improved by 1.642 
+Iteration 5 of at most 1000: 
+The log-likelihood improved by 1.848 
+Iteration 6 of at most 1000: 
+The log-likelihood improved by 2.767 
+Iteration 7 of at most 1000: 
+The log-likelihood improved by 2.1 
+Iteration 8 of at most 1000: 
+The log-likelihood improved by 2.329 
+Iteration 9 of at most 1000: 
+The log-likelihood improved by 2.469 
+Iteration 10 of at most 1000: 
+The log-likelihood improved by 2.954 
+Iteration 11 of at most 1000: 
+The log-likelihood improved by 2.249 
+Iteration 12 of at most 1000: 
+The log-likelihood improved by 1.838 
+Iteration 13 of at most 1000: 
+The log-likelihood improved by 1.807 
+Iteration 14 of at most 1000: 
+The log-likelihood improved by 2.713 
+Iteration 15 of at most 1000: 
+The log-likelihood improved by 3.215 
+Iteration 16 of at most 1000: 
+The log-likelihood improved by 2.264 
+Iteration 17 of at most 1000: 
+The log-likelihood improved by 1.785 
+Iteration 18 of at most 1000: 
+The log-likelihood improved by 2.012 
+Iteration 19 of at most 1000: 
+The log-likelihood improved by 1.844 
+Iteration 20 of at most 1000: 
+The log-likelihood improved by 1.444 
+Iteration 21 of at most 1000: 
+The log-likelihood improved by 1.835 
+Iteration 22 of at most 1000: 
+The log-likelihood improved by 0.3141 
+Step length converged once. Increasing MCMC sample size.
+Iteration 23 of at most 1000: 
+The log-likelihood improved by 1.96 
+Step length converged twice. Stopping.
+Evaluating log-likelihood at the estimate. Using 20 bridges: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 .
+
+This model was fit using MCMC.  To examine model diagnostics and check for degeneracy, use the mcmc.diagnostics() function.
+> Sys.time() - t0
+Time difference of 2.191193 hours
+> 
+> #'
+> #+ model-summary1,cache=FALSE
+> anova.ergm(model1)
+Analysis of Variance Table
+
+Model 1: mnet3.simple ~ edges + triangle + twopath
+         Df Deviance Resid. Df Resid. Dev Pr(>|Chisq|)    
+NULL                   1604736          0                 
+Model 1:  3  -658762   1604733     658762    < 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> summary(model1)
+
+==========================
+Summary of model fit
+==========================
+
+Formula:   mnet3.simple ~ edges + triangle + twopath
+
+Iterations:  23 out of 1000 
+
+Monte Carlo MLE Results:
+           Estimate Std. Error MCMC % p-value    
+edges    -4.1386030  0.0126549      1  <1e-04 ***
+triangle  0.0937380  0.0003766      1  <1e-04 ***
+twopath  -0.0069399  0.0001070      1  <1e-04 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+     Null Deviance: 2224636  on 1604736  degrees of freedom
+ Residual Deviance:  658762  on 1604733  degrees of freedom
+ 
+AIC: 658768    BIC: 658805    (Smaller is better.) 
+> #'
+> #+ save-mod1,cache=FALSE
+> save(model1, file = 'modData2/smodel1.rda')
+> 
+> #######################################################################################
+> #######################################################################################
+> #######################################################################################
+> #'
+> #+ formula2
+> model2.f <- formula(mnet3.simple ~ edges + gwesp(0, fixed = TRUE) + twopath)
+> model2.f
+mnet3.simple ~ edges + gwesp(0, fixed = TRUE) + twopath
+> 
+> summary.statistics(model2.f)
+        edges gwesp.fixed.0       twopath 
+        95707         95698      28224895 
+> #'
+> #+ model-fitting1,cache=FALSE
+> t0 <- Sys.time()
+> model2 <- ergm(model2.f, iterations=1000, 
++                          control=control.ergm(parallel=cores, parallel.type="PSOCK", MCMC.samplesize=1000,
++                                               MCMC.interval=500, MCMLE.maxit = 1000, MCMC.burnin = 20000, seed=25))
+Starting maximum likelihood estimation via MCMLE:
+Iteration 1 of at most 1000: 
+The log-likelihood improved by 2.43 
+Iteration 2 of at most 1000: 
+The log-likelihood improved by 2.055 
+Iteration 3 of at most 1000: 
+The log-likelihood improved by 3.058 
+Iteration 4 of at most 1000: 
+The log-likelihood improved by 3.795 
+Iteration 5 of at most 1000: 
+The log-likelihood improved by 2.835 
+Iteration 6 of at most 1000: 
+The log-likelihood improved by 3.168 
+Iteration 7 of at most 1000: 
+The log-likelihood improved by 4.576 
+Iteration 8 of at most 1000: 
+The log-likelihood improved by 3.848 
+Iteration 9 of at most 1000: 
+The log-likelihood improved by 4.115 
+Iteration 10 of at most 1000: 
+The log-likelihood improved by 3.233 
+Iteration 11 of at most 1000: 
+The log-likelihood improved by 3.903 
+Iteration 12 of at most 1000: 
+The log-likelihood improved by 2.647 
+Iteration 13 of at most 1000: 
+The log-likelihood improved by 2.474 
+Iteration 14 of at most 1000: 
+The log-likelihood improved by 2.915 
+Iteration 15 of at most 1000: 
+The log-likelihood improved by 2.621 
+Iteration 16 of at most 1000: 
+The log-likelihood improved by 3.418 
+Iteration 17 of at most 1000: 
+Killed
